@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./libs/css/style.css">
+    <title>GeoNames HTML App | IT Career Switch</title>
+</head>
+<body>
+    <h1>GeoName API HTML App</h1>
+    <div class="table">
+        <div class ="header">
+            
+        </div>
+        <div class ="table_section">
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        API name
+                    </th>
+                    <th>
+                        API description
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>API 1.</td>
+                    <td>Description
+                     
+                    </td>
+                    <td>
+                        <button id="button1">Submit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ocean API</td>
+                    <td>The name of the ocean or sea.
+                        <div class="desc-ocean">
+                            <label for="lat">Enter Latitude:</label>
+                            <input type="number" id="setLat" name="lat">
+                            <label for="lng">Enter Longitude:</label>
+                            <input type="number" id="setLng" name="lng">
+                        </div>
+                    </td>
+                    <td>
+                        <button id="button2">Submit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>API 3</td>
+                    <td>Description
+                    
+                    </td>
+                    <td>
+                        <button id="button3">Submit</button>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3" id="results">
+                        <h1>Results</h1>
+                        <div id="ocean">
+                        <h2>Ocean API</h2>
+                        <table>
+                            <tr>
+                                <td> Name:</td>
+                                <td id="txtName">
+                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Distance:</td>
+                                <td id="txtDistance">
+                                </td>
+                                <tr>
+                                <td>GeonameId:</td>
+                                <td id="txtGeonameId">
+                                    
+                                </td>
+                                </tr>
+                            </tr>
+                        </table>
+                  
+                    </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+
+        </div>
+ </div>
+    <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+	<script type="application/javascript" src="libs/js/script.js"></script>
+    
+</body>
+</html>
