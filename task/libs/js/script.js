@@ -7,8 +7,8 @@ $('#button2').click(function() {
         type: 'POST',
         dataType: 'json',
         data: {
-            lat: $('#selLat').val(),
-            lng: $('#selLng').val()
+            lat: $('#setLat').val(),
+            lng: $('#setLng').val()
         },
         success: function(result) {
 
