@@ -15,11 +15,10 @@ $('#button2').click(function() {
             console.log(JSON.stringify(result));
 
             if (result.status.name == "ok") {
-
-                $('#txtName').html(result['data'][0]);
-                $('#txtGeonameId').html(result['data'][1]);
-                $('#txtDistance').html(result['data'][2]);
-                console.log('success');
+                $('#txtName').text(response['data']["name"]);
+                $('#txtGeonameId').text(response['data']["geonameId"]);
+                $('#txtDistance').text(response['data']["distance"]);
+                
                
             }
         

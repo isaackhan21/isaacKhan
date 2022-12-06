@@ -19,7 +19,7 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	print_r($decode);	
+		
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
