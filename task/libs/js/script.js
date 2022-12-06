@@ -10,7 +10,7 @@ $('#button2').click(function() {
             lat: $('#setLat').val(),
             lng: $('#setLng').val()
         },
-        success: function(result) {
+        success: function(response) {
 
             console.log(JSON.stringify(result));
 
