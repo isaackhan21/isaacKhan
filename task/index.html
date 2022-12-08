@@ -31,25 +31,25 @@
                 <tbody>
                 <tr>
                     <td>Earthquakes API.</td>
-                    <td>Returns a list of earthquakes, ordered by magnitude
+                    <td>Gives Datetime, depth and longitiude for 3 earthquakes
                         <div class="desc-ocean">
-                            <label for="north">Enter North:</label>
+                            <label for="north">Enter North:(+ve value)</label>
                             <input type="number" id="setNorth" name="north">
-                            <label for="south">Enter South:</label>
+                            <label for="south">Enter South:(-ve value)</label>
                             <input type="number" id="setSouth" name="south">
-                            <label for="east">Enter East:</label>
+                            <label for="east">Enter East:(-ve value)</label>
                             <input type="number" id="setEast" name="east">
-                            <label for="west">Enter West:</label>
+                            <label for="west">Enter West(+ve value):</label>
                             <input type="number" id="setWest" name="west">
                         </div>
                     </td>
                     <td>
-                        <button id="button1">Submit</button>
+                        <button id="earthquakeAPIBtn">Submit</button>
                     </td>
                 </tr>
                 <tr>
                     <td>Ocean API</td>
-                    <td>The name of the ocean or sea.
+                    <td>Gives Name, Distance and Geoname Id for an ocean:
                         <div class="desc-ocean">
                             <label for="lat">Enter Latitude:</label>
                             <input type="number" id="setLat" name="lat">
@@ -58,16 +58,23 @@
                         </div>
                     </td>
                     <td>
-                        <button id="button2">Submit</button>
+                        <button id="oceanAPIBtn">Submit</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>API 3</td>
-                    <td>Description
+                    <td>Wikipedia Search API</td>
+                    <td>returns summary, countyCode and wikipedia url for a place.
+                        <div class="desc-ocean">
+                            <label for="q">Enter Place(e.g Berlin, England):</label>
+                            <input type="text" id="setQ" name="q">
+                          
+                            
+
+                        </div>
                     
                     </td>
                     <td>
-                        <button id="button3">Submit</button>
+                        <button id="wikiSearchAPIBtn">Submit</button>
                     </td>
                 </tr>
                 </tbody>
@@ -83,6 +90,7 @@
                                 <td id="txtName">
                                    
                                 </td>
+                        
                             </tr>
                             <tr>
                                 <td>Distance:</td>
@@ -91,6 +99,107 @@
                                 <tr>
                                 <td>GeonameId:</td>
                                 <td id="txtGeonameId">
+                                    
+                                </td>
+                                </tr>
+                            </tr>
+                        </table>
+                  
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" id="results">
+                        <div id="ocean">
+                        <h2>Earthquake API</h2>
+                        <table>
+                            <tr>
+                                <td> Earthquake 1:</td>
+                                <td id="txtEarthquake1">
+                                    Date Time:
+                                    <span id="earthquake1dateTime">
+
+                                    </span>
+                                    <br/>
+                                    Depth:
+                                    <span id="earthquake1depth">
+
+                                    </span>
+                                    <br/>
+                                    
+                                    Longitude:
+                                    <span id="earthquake1lng">
+
+                                    </span>
+                                </td>
+                                    
+                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Earthquake 2:</td>
+                                <td id="txtEarthquake2">
+                                    Date Time:
+                                    <span id="earthquake2dateTime">
+
+                                    </span>
+                                    <br/>
+                                    Depth:
+                                    <span id="earthquake2depth">
+
+                                    </span>
+                                    <br/>
+                                    
+                                    Longitude:
+                                    <span id="earthquake2lng">
+
+                                    </span>
+                                </td>
+                                <tr>
+                                <td>Earthquake 3:</td>
+                                <td id="txtEarthquake3">
+                                    Date Time:
+                                    <span id="earthquake3dateTime">
+
+                                    </span>
+                                    <br/>
+                                    Depth:
+                                    <span id="earthquake3depth">
+
+                                    </span>
+                                    <br/>
+                                    
+                                    Longitude:
+                                    <span id="earthquake3lng">
+
+                                    </span>
+                                </td>
+                                </tr>
+                            </tr>
+                        </table>
+                  
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" id="results">
+                        <div id="ocean">
+                        <h2>Wikipedia Search API</h2>
+                        <table>
+                            <tr>
+                                <td> Summary:</td>
+                                <td id="txtSummary">
+                                   
+                                </td>
+                        
+                            </tr>
+                            <tr>
+                                <td>Country Code:</td>
+                                <td id="txtCountryCode">
+                                </td>
+                                <tr>
+                                <td>Wikipedia Url:</td>
+                                <td id="wikipediaUrl">
                                     
                                 </td>
                                 </tr>
