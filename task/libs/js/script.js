@@ -1,4 +1,23 @@
+$(document).ready(
+    showEmptyResults()
+);
+
+function showEmptyResults() {
+    $('.ocean-results').hide();
+    $('.wikisearch-results').hide();
+    $('.empty-results').show();
+    $('.earthquake-results').hide();
+
+}
+
+
+
+
 $('#earthquakeAPIBtn').click(function() {
+    $('.ocean-results').hide();
+    $('.wikisearch-results').hide();
+    $('.empty-results').hide();
+    $('.earthquake-results').show();
     console.log('pressed button 1');
     $.ajax({
         url: "libs/php/earthquakeAPI.php",
@@ -41,6 +60,10 @@ $('#earthquakeAPIBtn').click(function() {
 });
 
 $('#oceanAPIBtn').click(function() {
+    $('.empty-results').hide();
+    $('.earthquake-results').hide();
+    $('.wikisearch-results').hide();
+    $('.ocean-results').show();
     console.log('pressed button 2');
     $.ajax({
         url: "libs/php/oceanAPI.php",
@@ -75,6 +98,10 @@ $('#oceanAPIBtn').click(function() {
 
 
 $('#wikiSearchAPIBtn').click(function() {
+    $('.empty-results').hide();
+    $('.ocean-results').hide();
+    $('.earthquake-results').hide();
+    $('.wikisearch-results').show();
     console.log('pressed button 3');
     $.ajax({
         url: "libs/php/wikiSearchAPI.php",
