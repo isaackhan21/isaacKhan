@@ -1,0 +1,1847 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Quicksand:wght@400;500&family=Space+Mono&display=swap');
+
+*{
+  box-sizing: border-box;
+
+}
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  overflow-y: scroll;
+  
+ 
+  }
+
+
+
+ 
+
+  
+  .container-fluid {
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  
+  }
+  
+ 
+
+  #map {
+    width: 100%;
+    height: 100%;
+    
+   
+  }
+  
+  @media (min-width: 768px) {
+    #map {
+      width: 75%;
+      margin: 0 auto;
+    }
+    
+  }
+
+  html, body, #map {
+    height: 100%;
+    width: 100%;
+}
+
+
+  
+  
+ 
+
+  #modal {
+  
+    
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+  }
+
+  .modal-dialog {
+    max-width: 800px;
+   
+    
+  }
+
+  .modal-center {
+  
+   
+    
+  }
+
+  
+
+  #modal .modal-dialog {
+    width: 100%;
+    height: 600px; 
+  }
+  
+
+  .modal-header {
+    height:70px;
+    
+    background-color: blue;
+    color: white;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+  }
+
+  .select-div {
+    display: flex;
+  }
+
+  #firstName {
+    font-size: 1.5em;
+  }
+
+  
+
+   .btn-close {
+    color: #fff; 
+    opacity: 1;
+   }
+
+   .modal-body {
+    margin: 0;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+   }
+
+   
+
+
+
+
+   .data-name, .data-value {
+    padding: 10px;
+   }
+
+  
+
+   .name-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+   }
+
+   #countryFlag {
+    width: 220px;
+    margin: 1.5rem;
+   }
+
+   #countryFlag img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+}
+
+#weather-icon {
+  background-color: black;
+  width: 50px;
+  height: auto;
+  border-radius: 0.4rem;
+  margin-left: 0.5rem;
+  padding: 0;
+  
+ 
+  
+}
+
+#weather-icon img {
+  width: 50px;
+  height: 50px;
+}
+
+#weatherSmallIcon {
+  text-align: center;
+}
+
+span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+
+
+
+.country{
+  text-align: center;
+}
+
+.main-data-div {
+  display: flex;
+  justify-content: center;
+  align-itens: center;
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+  
+}
+
+.data-text {
+  display: flex;
+  justify-content: center;
+  align-itens: center;
+}
+
+i {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+}
+
+h6 {
+  display: flex;
+  align-items: center;
+}
+h6 span {
+  margin-left: 5px; 
+}
+
+.row-icon {
+  color: blue;
+  font-size: 2rem;
+}
+
+tr {
+  display: table-row;
+}
+
+td {
+  display: table-cell;
+}
+
+@media (max-width: 767px) {
+  tr {
+    display: block;
+  }
+
+  td {
+    display: block;
+    width: 100%; 
+  }
+}
+
+@media (min-width: 768px) {
+  tr {
+    display: table-row;
+  }
+
+  td {
+    display: table-cell;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-name, #btnModal {
+    display: none;
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: flex;
+  }
+  
+}
+
+@media (min-width: 769px) {
+  #btnModal, .project-name {
+    display: block;
+  }
+}
+
+.wikipedia-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.wikipedia-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: blue;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.wikipedia-link:hover {
+  text-decoration: underline;
+}
+
+.wikipedia-summary {
+  font-size: 14px;
+  color: gray;
+  text-align: center;
+}
+
+.marker-title {
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.marker-link {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white !important;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.marker-link:hover {
+  background-color: #0069d9;
+}
+
+.wikiIcon i, .populationIcon i  {
+  text-align: center;
+
+}
+
+
+
+
+
+
+.fa-wikipedia-w {
+  display: inline-block;
+  font-size: inherit;
+  width: auto!important; 
+  height: 100%!important;
+  overflow: visible;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+ 
+}
+
+.populationIcon {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+
+
+.weather-popup {
+  max-width: 300px;
+  font-family: Arial, sans-serif;
+}
+
+
+.weather-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+}
+
+
+.weather-popup-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+
+
+
+.weather-popup-body {
+  padding: 8px;
+}
+
+.weather-popup-body p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.marker-cluster .fa {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
+.marker-cluster .fa::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: -1;
+}
+
+.weather-marker-icon div {
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-marker-icon img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+#btnModal {
+  max-width: 500px;
+}
+
+@media (min-width: 768px) {
+  .select-container {
+    width: 40%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .select-container {
+    width: 30%;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .select-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.easy-button i {
+  margin: auto;
+  padding: 0;
+} 
+
+.easy-button i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+}
+
+
+
+.leaflet-bar i {
+  line-height: 35px;
+  
+}
+
+.fa-wikipedia-w {
+  font-size: 10px;
+}
+
+.travelCostIcon {
+  
+  margin-top: -75px;
+  
+}
+
+.my-custom-marker {
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.marker-container {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marker-flag {
+  width: 100%;
+  height: 100%;
+}
+
+
+ i {
+  text-align: center;
+}
+
+
+
+.my-custom-icon-class {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  
+  margin: 0 auto;
+  
+  
+}
+
+.my-custom-icon-class .fa {
+  text-align: center;
+}
+
+.my-custom-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  width: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid black;
+  padding: 5px;
+ 
+  
+}
+
+.my-roadgoat-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #ff6daa;
+  border: 2px solid white;
+  padding: 5px;
+  color: white;
+
+}
+
+.my-roadgoat-icon:hover {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  width: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #ff6daa;
+  padding: 5px;
+  color: #ff6daa;
+  
+
+}
+
+.my-custom-icon:hover {
+  background-color: lightgrey;
+  color: white;
+  
+
+}
+
+.my-custom-icon i.fa-brands {
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(-0.5px, 2px);
+  
+
+}
+
+.my-custom-icon i.fa-brands:hover {
+  
+  color: white;
+  
+
+}
+
+.my-custom-icon i.fa-solid {
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(0px, 2.3px);
+  
+  
+
+}
+
+.my-roadgoat-icon i.fa-map-location {
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(0px, 2.3px);
+  
+  font-size: 14px;
+  
+  
+
+}
+
+.my-city-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  width: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid black;
+  padding: 5px;
+  color: grey;
+  
+  
+
+}
+
+.my-city-icon:hover {
+  background-color: grey;
+  border: 2px solid white;
+  color: white;
+
+}
+
+.my-city-icon i.fa-city {
+  font-size: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(-0.3px, 2px);
+}
+
+.my-flight-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  width: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid black;
+  padding: 5px;
+  color: #ffbb00;
+
+}
+
+.my-flight-icon:hover{
+ 
+  background-color: #ffbb00;
+  border: 2px solid white;
+  
+  color: white;
+
+}
+
+.my-flight-icon i.fa-plane-up {
+  
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+}
+
+.my-wiki-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  width: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid black;
+  padding: 5px;
+  color: black;
+
+}
+
+.my-wiki-icon i.fa-brands {
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(-0.5px, 2px);
+  font-size: 16px;
+}
+
+.my-wiki-icon:hover {
+ 
+  background-color: lightgrey;
+  border: 2px solid white;
+  
+  color: white;
+
+}
+   
+
+
+
+
+.my-custom-icon i.fas {
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(-0.3px, 2px);
+  
+  
+
+}
+
+
+
+#countryButton, #weatherButton, #earthquakeButton, #wikiButton, #planeButton, #cityDestinationButton {
+  height: 35px; 
+  width: 35px;  
+  
+}
+
+
+
+
+.wiki-button-icon, .earthquake-button-icon {
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(0, 0);
+
+}
+
+
+
+.navbar {
+  height: 70px;
+ 
+
+  
+  
+  
+  
+  
+}
+
+
+
+.flight-marker i.fa-solid {
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+
+
+
+.modal-header i.fa-arrows-alt {
+  font-size: 48px;
+  padding: 10px;
+  
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  
+  
+#cityData, #earthQuakeData, #wikiData, #cityDestinationData, #weatherData, #flightData  {
+  display: flex;
+  
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: white;
+  
+}
+
+
+
+#cityData td, #earthQuakeData td, #wikiData td, #cityDestinationData td, #weatherData td, #flightData td {
+  display: flex;
+  
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+  
+  
+  
+  
+}
+
+#cityData td:nth-child(1), #earthQuakeData td:nth-child(1), #wikiData td:nth-child(1), #cityDestinationData td:nth-child(1), #weatherData td:nth-child(1), #flightData td:nth-child(1){
+  gap: 20px;
+  
+  
+  
+}
+
+#cityDestinationData i.fas-map-locaion {
+  margin: 0;
+}
+
+#cityDestinationData td, #weatherData td, #earthQuakeData td, #flightData td, #wikiData td, #main-td, #value-td {
+  width: 100%;
+}
+
+
+
+td:nth-child(1) {
+  width: 50%; 
+}
+
+td:nth-child(2) {
+  
+  width: 50%; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+.data-value-main {
+  width: 100%;
+  text-align: left;
+}
+
+
+
+
+
+@media (max-width: 767px) {
+  #countrySelect {
+    width: 70%; 
+  }
+}
+
+
+
+.btn-close {
+  font-size: 1em;
+}
+
+
+
+
+#content {
+  height: 100%;
+
+}
+
+
+
+@media (min-width: 768px) {
+ 
+  .modal-dialog {
+    width: 80%;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-dialog {
+    width: 60%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .modal-dialog {
+    width: 50%;
+  }
+}
+
+
+
+
+@media (max-width: 767px) {
+  
+    .modal-center {
+      margin-left: 0; 
+    }
+  }
+
+
+
+
+.modal-title i.fa-brands {
+  font-size: 1rem;
+  margin-right: 0.3rem;
+  
+}
+
+//cityData Modal
+
+#cityData tr {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#cityData td:first-child {
+  padding: 10px;
+  vertical-align: middle;
+  
+}
+@media only screen and (max-width: 768px) {
+  #cityData td:first-child {
+  
+    width: 100%;
+  }
+}
+
+
+#cityData i.fa-city {
+  color: grey;
+  font-size: 30px;
+  margin-right: 20px;
+  transform: translate(2px, 2.6px);
+}
+
+#cityData span {
+  font-size: 24px;
+  color: #333;
+  margin-left: 10px;
+}
+
+#cityData td:last-child {
+  padding: 10px;
+  vertical-align: middle;
+  text-align: right;
+  width: 100%;
+}
+
+#cityData div {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+#cityData a {
+  color: blue;
+}
+
+#cityData div:last-child {
+  margin-bottom: 0;
+}
+
+//weatherData Modal 
+
+#weatherData tr {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+
+#weatherData .icon-td {
+  padding: 10px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#weatherData .icon-box {
+  background-color: #ccc;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-right: 10px;
+  float: left;
+}
+
+@media only screen and (max-width: 768px) {
+  #weatherData .icon-box {
+    
+    
+    margin-right: 0;
+    margin-top: 20px;
+    
+  }
+}
+
+#weatherData .icon {
+  width: 40px;
+  height: 40px;
+}
+
+#weatherData .city-name {
+  display: flex;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  transform: translate(2px, 5px);
+}
+
+#weatherData .city-div {
+  display: flex;
+
+}
+
+#weatherData .value-td {
+  padding: 10px;
+  vertical-align: middle;
+  text-align: right;
+  
+}
+
+#weatherData .temperature {
+  font-size: 18px;
+  color: #ff4d4d;
+  margin-bottom: 5px;
+}
+
+#weatherData .humidity {
+  font-size: 18px;
+  color: #4da6ff;
+  margin-bottom: 5px;
+}
+
+#weatherData .wind-speed {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+#weatherData .weather {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+
+//cityDestinationData modal
+
+#cityDestinationData tr {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+
+
+#cityDestinationData td {
+  padding: 10px;
+  vertical-align: middle;
+  
+  
+}
+
+
+
+
+#cityDestinationData .icon {
+  color: #ff6daa;
+  font-size: 30px;
+  margin-right: 20px;
+  transform: translate(2px, 6px);
+}
+
+@media only screen and (max-width: 768px) {
+  #cityDestinationData .icon {
+    color: #ff6daa;
+    font-size: 30px;
+    margin-right: 20px;
+    margin-bottom: 1rem;
+    transform: translate(3px, 6px);
+  }
+}
+
+#cityDestinationData .city-name {
+  font-size: 30px;
+  color: black;
+  margin-left: 5px;
+  
+  
+}
+
+#cityDestinationData .city-info {
+  display: flex;
+}
+
+@media only screen and (max-width: 768px) {
+  #cityDestinationData .city-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+#cityDestinationData .value-column {
+  text-align: right;
+}
+
+#cityDestinationData .average-rating {
+  font-size: 18px;
+  color: black;
+  margin-bottom: 5px;
+}
+
+#cityDestinationData .travel-guide a,
+#cityDestinationData .airbnb a,
+#cityDestinationData .alltrails a,
+#cityDestinationData .getyourguide a,
+#cityDestinationData .google-events a {
+  color: #ff6daa;
+}
+
+#cityDestinationData .travel-guide,
+#cityDestinationData .airbnb,
+#cityDestinationData .alltrails,
+#cityDestinationData .getyourguide,
+#cityDestinationData .google-events,
+#cityDestinationData .safety,
+#cityDestinationData .covid,
+#cityDestinationData .travel-cost {
+  font-size: 18px;
+  color: black;
+  margin-bottom: 5px;
+}
+
+
+
+//wikiData modal
+
+#wikiData tr {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#wikiData .icon-td {
+  padding: 10px;
+  width: 50%;
+  vertical-align: middle;
+
+}
+
+@media only screen and (max-width: 768px) {
+  #wikiData .icon-td {
+    width: 100%;
+  }
+}
+
+
+#wikiData .icon {
+  color: black;
+  font-size: 20px;
+  margin-right: 5px;
+  margin-bottom: -5px;
+  transform: translate(2px, 2.6px);
+}
+
+#wikiData .title {
+  font-size: 20px;
+  margin-left: 5px;
+}
+
+#wikiData .value-td {
+  padding: 10px;
+  vertical-align: middle;
+}
+
+#wikiData .summary {
+  font-size: 16px;
+  color: #333;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#wikiData .button {
+  width: 200px;
+  font-size: 16px;
+  text-align: center;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+//earthQuakeData Modal
+
+#earthQuakeData .icon-td {
+  padding: 10px;
+  width: 80px;
+  vertical-align: middle;
+}
+
+#earthQuakeData .icon {
+  color: red;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+#earthQuakeData .earthquake-location {
+  font-size: 16px;
+  color: #333;
+  margin-left: 5px;
+  display: block;
+}
+
+#earthQuakeData .value-td {
+  padding: 10px;
+  vertical-align: middle;
+  text-align: right;
+  
+}
+
+#earthQuakeData .magnitude {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+#earthQuakeData .depth {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+#earthQuakeData .datetime {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+//flightData Modal
+
+#flightData .icon-td {
+  padding: 10px;
+  width: 80px;
+  vertical-align: middle;
+}
+
+#flightData .icon {
+  color: #ffbb00;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+#flightData .flight-info {
+  font-size: 16px;
+  color: #333;
+  margin-left: 5px;
+}
+
+#flightData .value-td {
+  padding: 10px;
+  vertical-align: middle;
+  text-align: right;
+}
+
+#flightData .speed,
+#flightData .altitude,
+#flightData .geo,
+#flightData .direction {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+
+
+
+
+.leaflet-control-zoom-in:before,
+.leaflet-control-zoom-out:before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-90%, -10%);
+}
+
+
+
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.navbar-brand {
+  display: flex; 
+  align-items: center; 
+}
+
+// City marker
+
+
+
+.city-details {
+  text-align: center;
+  line-height: 1.5em;
+}
+
+.city-icon {
+  color: grey;
+  font-size: 48px;
+  display: block;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%;
+}
+
+.city-name {
+  
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.city-population {
+  margin-bottom: 1rem;
+  font-size: 18px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
+.city-wikipedia {
+  margin-bottom: 1rem;
+  font-size: 18px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
+.city-wikipedia a {
+  color: blue;
+  margin-left: 0.5rem;
+}
+
+.city-wikipedia a:hover {
+  color: lightblue;
+}
+
+.city-timezone {
+  margin-bottom: 1rem;
+  font-size: 18px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
+.city-latitude {
+  font-size: 18px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.city-longitude {
+  font-size: 18px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
+// Country Marker
+
+.country-info-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+ 
+}
+
+.country-flag-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+.country-flag-container {
+  width: 220px;
+  height: 100%;
+  background-color: #c7ecee;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.country-flag {
+  height: 120px;
+  width: 200px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.country-name {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  
+}
+
+.country-capital,
+.country-currency,
+.country-population {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 400;
+  
+}
+
+
+// Flight Marker
+
+.flight-info {
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.flight-icon-div {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.flight-icon {
+  color: #ffbb00;
+  font-size: 48px;
+  display: block;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.flag-img {
+  margin-right: 5px;
+  vertical-align: middle;
+  
+}
+
+.flight-text {
+  font-size: 20px;
+}
+
+//EarthQuake Marker
+
+.earthquake-location {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.earthquake-location h3 {
+  margin-bottom: 0;
+}
+
+.earthquake-location h6 {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.earthquake-info {
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.earthquake-info div {
+  
+}
+
+h3 i.fa-exclamation-triangle {
+  color: red;
+  
+  
+}
+
+//RoadGoat Marker
+
+.roadgoat-container {
+  text-align: center;
+  
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
+.roadgoat-container a {
+  color: #ff6daa;
+}
+
+.roadgoat-heading {
+  margin-bottom: 0.3rem;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
+.roadgoat-title {
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1.2rem;
+}
+
+.roadgoat-icon {
+  margin-top: 0.8rem;
+  font-size: 40px;
+  text-align: center;
+  width: 100%;
+  color: #ff6daa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: translateX(2px);
+}
+
+.roadgoat-info {
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+  
+}
+
+.city-name {
+  margin-top: 0.2rem;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.lodging-container {
+  margin-top: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.lodging-title {
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.things-to-do-container {
+  margin-bottom: 1rem;
+  margin-top: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.things-to-do-info {
+  margin-bottom: 0.5rem;
+  
+}
+
+.things-to-do-title {
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.keep-in-mind-container {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+
+.keep-in-mind-container-info{
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.keep-in-mind-title {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
+.keep-in-mind-info {
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  margin-right: 0.5rem;
+  
+
+}
+
+.info-value {
+  margin-left: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+
+//Weather Data
+
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+}
+
+.weather-heading {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.weather-city {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.weather-icon-container {
+  background-color: #B2EBF2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  margin: 0 auto
+}
+
+.weather-icon-background {
+  background-color: #fff;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.weather-description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+}
+
+.weather-temp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+
+
+.weather-info-container {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.weather-info {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  
+}
+
+.weather-info-icon {
+  background-color: #b3d9ff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-info-icon span {
+  color: white;
+  font-size: 20px;
+}
+
+.weather-info-text {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.weather-wind-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-wind-icon {
+  background-color: #ffb3b3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+
+// Country marker Icon
+
+.custom-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+}
+
+.custom-marker div {
+  background-color: #c7ecee;
+  border: 2px solid black;
+  border-radius: 50%;
+  height: 55px;
+  width: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-marker img {
+  height: 18px;
+  width: 19px;
+}
+
+
+ 
+
+
+@media only screen and (min-width: 768px) {
+  .data-value-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+
+  
+ 
+  
+  
+ 
+ 
+   
+  
+}
+
+@media only screen and (max-width: 768px) {
+ .modalHeader span {
+  font-size: 10px;
+ }
+}
+

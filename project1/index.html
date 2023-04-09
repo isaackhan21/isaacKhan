@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+  <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/03a748f37e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css" />
+  <script src="./node_modules/leaflet/dist/leaflet.js"></script>
+
+
+  
+
+
+
+<link rel="stylesheet" href="dist/css/MarkerCluster.css">
+<link rel="stylesheet" href="dist/css/MarkerCluster.Default.css">
+<link rel="stylesheet" href="dist/css/leaflet.extra-markers.min.css">
+<link rel="stylesheet" href="dist/css/leaflet.awesome-markers.css">
+<link rel="stylesheet" href="dist/css/easy-button.css">
+
+
+<link rel="stylesheet" href="style.css?v=1.0" />
+<script src="./node_modules/@rapideditor/country-coder/dist/country-coder.iife.js"></script>
+
+<script src="dist/js/leaflet.markercluster.js"></script>
+<script src="dist/js/leaflet.extra-markers.min.js"></script>
+<script src="dist/js/leaflet.awesome-markers.js"></script>
+<script src="dist/js/easy-button.js"></script>
+<script src="leaflet.markercluster.layersupport.js"></script>
+
+
+
+
+   
+      
+    
+    <title>Gazetteer</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container d-flex">
+        <a href="" class="navbar-brand"><h5 class="project-name align-items-center my-auto">Gazetteer</h5></a>
+        <div class="select-container container w-30 w-md-55">
+          <select id="countrySelect" name="country-select" class="form-select" aria-label="Default select example">
+            
+          </select>
+        </div>
+        
+        
+        <button id="btnModal" class="btn btn-primary" data-bs-toggle="modal" data-backdrop="false" data-bs-target="#modal">Close Modal</button>
+        <div class="navbar-text"></div>
+      </div>
+    </nav>
+    
+
+
+    <div class="container-fluid">
+      <div id="map"></div>
+      <div>
+         <div class="modal fade modal-xl" id="modal">
+            <div class="modal-dialog modal-center modal-dialog-centered">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <div class="modal-title">
+                        <h3 class="modalHeader"></h3>
+                     </div>
+                     <button class="btn-close btn-close-white" data-bs-dismiss="modal" data-bs-target="#modal"></button>
+                  </div>
+                  <div class="modal-body">
+                     <table id="countryTable" class="table table-striped">
+                        
+                        <tbody>
+                           <tr id="mainRow" class="firstRow" >
+                             <td id="main-td" colspan="2">
+                               <div class="country-name-td">
+                                 <div class="name-row">
+                                   <div class="data-name-main"></div>
+                                   <div id="countryFlag"></div>
+                                   <div class="country">
+                                     <h6 id="firstName"></h6>
+                                   </div>
+                                 </div>
+                                 <div class="data-value-main">
+                                   <div class="main-data-div"><h6 class="data-text"><i class="fa-solid fa-city"></i>Capital City: <span id="capital-city"></span></h6></div>
+                                   <div class="main-data-div"><h6 class="data-text"><i class="fa-solid fa-person"></i>Population: <span id="population"></span></h6></div>
+                                   <div class="main-data-div"><h6 class="data-text"><i class="fa-solid fa-coins"></i>Currency: <span id="currency"></span></h6></div>
+                                 </div>
+                               </div>
+                             </td>
+                           </tr>
+                         </tbody>
+                         
+                     </table>
+                     <table id="earthQuakeTable" class="table table-striped">
+                     
+                     <tbody>
+                   
+               
+               </tbody>
+               </table>
+               <table id="wikiTable" class="table table-striped ">
+                  <thead>
+                     <tr>
+                     </tr>
+                  </thead>
+                  <tbody>
+                    
+            </tbody>
+            </table>
+            <table id="flightTable" class="table table-striped ">
+            
+            <tbody>
+           
+         </tbody>
+         </table>
+         <table id="weatherTable" class="table table-striped ">
+            <thead>
+               <tr>
+               </tr>
+            </thead>
+            <tbody>
+            
+            </tbody>
+         </table>
+         <table id="cityDestinationTable" class="table table-striped ">
+            <thead>
+               <tr>
+               </tr>
+            </thead>
+            <tbody>
+            
+            </tbody>
+         </table>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+ 
+
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="libs/js/script.js" defer ></script>
+    
+    
+    
+    
+    
+    
+
+  
+
+    
+    
+    <pre id="response"></pre>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "leaflet-map",
+  "version": "1.0.0",
+  "description": "Leaflet map",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rapideditor/country-coder": "^5.2.0",
+    "leaflet": "^1.9.3"
+  }
+}
