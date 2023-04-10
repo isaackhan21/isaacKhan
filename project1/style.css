@@ -756,6 +756,7 @@ i {
 #cityData td:first-child {
   padding: 10px;
   vertical-align: middle;
+  min-width: 400px;
 }
 @media only screen and (max-width: 768px) {
   #cityData td:first-child {
