@@ -3,6 +3,10 @@
 
 
 
+var bounds;
+var center;
+
+
 if(this.map) {
   this.map.remove();
 }
@@ -30,16 +34,18 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
       minZoom: 3
   }).addTo(map);
 
-  function fetchData(){
+  
+
+
+
+  function fetchData(countryCode, twoDigitCountryCode, countryName){
 
 
 
 
 
 
-
-    const bounds = country.getBounds();
-    const center = bounds.getCenter();
+   
     
     var countryMarkersGroup = L.markerClusterGroup.layerSupport({
       disableClusteringAtZoom: 19,
@@ -88,11 +94,18 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
     
     
     
+    
+
       $('#firstName').html(data.name);
       $("#countryFlag").html(`<img src='${data.flag}' height="50" width="50"/>`);
       $('#capital-city').html(data.capital);
-      $('#population').html(data.population);
+      $('#population').html(data.population ? numberWithCommas(data.population) : 'No Data');
       $('#currency').html(`(${data.currencies[0].symbol}) ${data.currencies[0].name}`);
+
+      function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
     
     
     
@@ -217,10 +230,7 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
         });
       
     
-          var customIconOptions = {
-            className: "my-custom-icon", 
-            iconSize: [32, 32], 
-          };
+        
     
        
     
@@ -249,10 +259,11 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
     
              
              
+        
+
           function addEarthquakeDataToTable(earthquake) {
             let $tr = $('<tr>').attr('id', 'earthQuakeData');
           
-            
             let $iconTd = $('<td>').addClass('icon-td');
           
             let $icon = $('<i>').addClass('fas fa-exclamation-triangle icon').addClass('icon')
@@ -261,14 +272,13 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
           
             $iconTd.append($icon, $earthquakeLocation);
           
-            
             let $valueTd = $('<td>').addClass('value-td');
           
-            let $magnitude = $('<div>').text('Magnitude: ' + (earthquake.magnitude ? earthquake.magnitude : 'No Data')).addClass('magnitude');
+            let $magnitude = $('<div>').text('Magnitude: ' + (earthquake.magnitude ? earthquake.magnitude.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'No Data')).addClass('magnitude');
           
-            let $depth = $('<div>').text('Depth: ' + (earthquake.depth ? earthquake.depth + ' km' : 'No Data')).addClass('depth');
+            let $depth = $('<div>').text('Depth: ' + (earthquake.depth ? earthquake.depth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' km' : 'No Data')).addClass('depth');
           
-            let $datetime = $('<div>').text('Date/Time: ' + (earthquake.datetime ? earthquake.datetime : 'No Data')).addClass('datetime');
+            let $datetime = $('<div>').text('Date/Time: ' + (earthquake.datetime ? new Date(earthquake.datetime).toLocaleString() : 'No Data')).addClass('datetime');
           
             $valueTd.append($magnitude, $depth, $datetime);
           
@@ -276,6 +286,7 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
           
             $('#earthQuakeTable tbody').append($tr);
           }
+          
           
             
     
@@ -351,9 +362,9 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
                 </div>
                 <br>
                 <div class="earthquake-info">
-                  <div><b>Date/Time:</b> ${datetime}</div>
-                  <div><b>Depth:</b> ${depth} km</div>
-                  <div><b>Magnitude:</b> ${magnitude}</div>
+                  <div><b>Date/Time:</b> ${new Date(datetime).toLocaleString()}</div>
+                  <div><b>Depth:</b> ${depth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} km</div>
+                  <div><b>Magnitude:</b> ${magnitude.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
                 </div>
                 
                 `);
@@ -574,29 +585,40 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
               
               }
     
+           
+
               function addCityDataToTable(city) {
                 let $tr = $('<tr>').attr('id', 'cityData');
-              
+                          
                 let $iconTd = $('<td>');
                 let $icon = $('<i>').addClass('fas fa-city');
                 let $cityName = $('<span>').text(city.name ? city.name : 'No Data');
-              
+                          
                 $iconTd.append($icon, $cityName);
-              
+                          
                 let $valueTd = $('<td>');
-              
-                let $population = $('<div>').text('Population: ' + (city.population ? city.population : 'No Data'));
-                let $wikipedia = $('<div>').html('Wikipedia: ' + (city.wikipedia ? `<a href="${city.wikipedia}" target="_blank">${city.name}</a>` : 'No Data'));
+                          
+                let population = city.population ? city.population.toLocaleString() : 'No Data';
+                let $population = $('<div>').text('Population: ' + population);
+                
+                let wikipediaLink = city.wikipedia ? `<a href="${city.wikipedia}" target="_blank">${city.name}</a>` : 'No Data';
+                let $wikipedia = $('<div>').html('Wikipedia: ' + wikipediaLink);
+                
                 let $timezone = $('<div>').text('Timezone: ' + (city.timezone ? city.timezone : 'No Data'));
-                let $latitude = $('<div>').text('Latitude: ' + (city.lat ? city.lat : 'No Data'));
-                let $longitude = $('<div>').text('Longitude: ' + (city.lng ? city.lng : 'No Data'));
-              
+                
+                let latitude = city.lat ? city.lat.toFixed(4) : 'No Data';
+                let $latitude = $('<div>').text('Latitude: ' + latitude);
+                
+                let longitude = city.lng ? city.lng.toFixed(4) : 'No Data';
+                let $longitude = $('<div>').text('Longitude: ' + longitude);
+                
                 $valueTd.append($population, $wikipedia, $timezone, $latitude, $longitude);
-              
+                          
                 $tr.append($iconTd, $valueTd);
-              
+                          
                 $('#countryTable tbody').append($tr);
               }
+              
               
     
              
@@ -646,7 +668,7 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
                       <h1 class="city-name">${city.name ? city.name : 'No Data'}</h1>
                   
                       
-                      <div class="city-population">Population: ${city.population ? city.population : 'No Data'}</div>
+                      <div class="city-population">Population: ${city.population ? city.population.toLocaleString() : 'No Data'}</div>
                   
                       
                       <div class="city-wikipedia">Wikipedia: ${city.wikipedia ? `<a href="${city.wikipedia}" target="_blank">${city.name}</a>` : 'No Data'}</div>
@@ -785,18 +807,18 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
                           
     
                          
-                          let covidScore, covidText, covidUrl;
+                          let covidText;
     
                           if (Object.entries(covidData).length === 0) {
-                            covidScore = 'No Data';
+                            
                             covidText = 'No Data';
-                            covidUrl = 'No Data';
+                            
                           } else {
                             Object.entries(covidData).forEach(([name, covid]) => {
                               if (countryName.toLowerCase().includes(name.toLowerCase())) {
-                                covidScore = covid.value ?? 'No Data';
+                                
                                 covidText = covid.text ?? 'No Data';
-                                covidUrl = covid.url ?? 'No Data';
+                                
                               }
                             });
                           }
@@ -807,35 +829,35 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
                         
                           
                           const travelCostData = data.data.attributes.budget;
-                          let travelCostValue, travelCostText, travelCostSubText;
+                          let travelCostText;
           
                           if (Object.entries(travelCostData).length === 0) {
-                            covidScore = 'No Data';
-                            covidText = 'No Data';
-                            covidUrl = 'No Data';
+                            
+                            travelCostText = 'No Data';
+                            
                           } else {
                           Object.entries(travelCostData).forEach(([name, travelCost]) => {
                             if (name.toLowerCase().includes(city_short_name.toLowerCase()) || countryName.toLowerCase().includes(name.toLowerCase())) {
-                              travelCostValue = travelCost.value;
+                              
                               travelCostText = travelCost.text ?? 'No Data';
-                              travelCostSubText = travelCost.subText;
+                              
                             }
                             
                           });
                         }
                           const safetyData = data.data.attributes.safety;
-                          let safetyValue, safetyText, safetySubText;
+                          let safetyText;
             
                           if (Object.entries(safetyData).length === 0) {
-                            covidScore = 'No Data';
-                            covidText = 'No Data';
-                            covidUrl = 'No Data';
+                            
+                            safetyText = 'No Data';
+                            
                           } else {
                           Object.entries(safetyData).forEach(([name, safety]) => {
                             if (name.toLowerCase().includes(city_short_name.toLowerCase()) || countryName.toLowerCase().includes(name.toLowerCase())) {
-                              safetyValue = safety.value;
+                              
                               safetyText = safety.text || 'No Data';
-                              safetySubText = safety.subText;
+                              
                             }
                             
                           });
@@ -863,9 +885,7 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
                           const travel_guide = data.data.attributes.url;
     
                           addCityDestinationDataToTable(city_short_name, average_rating, travel_guide, airbnb, alltrails, getyourguide, google_events, safetyText, covidText, travelCostText);
-                          if ($('#cityDestinationTable td:empty').length > 0) {
-                            $('#cityDestinationTable td:empty').text('No data');
-                          }
+                         
                           
                           
                           
@@ -1156,13 +1176,198 @@ $(document).ready(function() {
   
   modal();
   
+ 
 
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
   } else { 
     
-    console.log('Not supported by this browser');
-  }
+    console.log('Geolocation not supported');
+   
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          console.log("User denied the request for Geolocation.");
+          function getCountryCodes() {
+            $.ajax({
+              url: "libs/php/getCountryCodes.php",
+              type: 'POST',
+              dataType: "json",
+              success: function(data) {
+                var countryCodesArray = [];
+                
+                for (var i=0; i<data.data.iso2_codes.length; i++) {
+                  countryCodesArray.push(data.data.iso2_codes[i]);
+                }
+                
+                getCountries(countryCodesArray);
+                
+               
+                
+                
+                
+              
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error:', textStatus, errorThrown);
+                console.log('There is an error');
+              }
+            });
+          }
+      
+          
+          getCountryCodes();
+       
+        
+      
+       
+      
+              
+      
+              
+              function fetchCountryGeometry(countryCode) {
+                $.ajax({
+                  url: "libs/php/getCountryGeometry.php",
+                  type: "POST",
+                  dataType: "json",
+                  data: {
+                    countryCode: countryCode,
+                  },
+              
+                  success: function (data) {
+                    
+                    
+                    border = L.geoJSON(data).addTo(country);
+                    border.setStyle({
+                      color: "blue",
+                      fillColor: "blue",
+                    });
+              
+                    
+                    if (border.getBounds().isValid()) {
+                      map.fitBounds(border.getBounds());
+                    }
+                    
+                    bounds = country.getBounds();
+                    center = bounds.getCenter();
+                    
+      
+                    
+                  },
+              
+                  error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error:", textStatus, errorThrown);
+                    console.log("There is an error");
+                  },
+                });
+              }
+      
+              function getCountries(countryCodesArray){
+              $.ajax({
+                url: "libs/php/getCountries.php",
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                  
+                  
+                  var countriesList = [];
+              
+              
+                  for (var i = 0; i < data.length; i++) {
+                    var countryCodeMatch = data[i].iso2_code;
+                    if (countryCodesArray.includes(countryCodeMatch)) {
+                      var countryItem = {
+                        code: data[i].iso3_code,
+                        name: data[i].name
+                      };
+                      countriesList.push(countryItem);
+                      
+                    }
+                  }
+            
+                  countriesList.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase();
+                    var nameB = b.name.toUpperCase();
+                    if (nameA < nameB) {
+                      return -1;
+                    }
+                    if (nameA > nameB) {
+                      return 1;
+                    }
+                    return 0;
+                  });
+                  
+                  
+                  for (var j = 0; j < countriesList.length; j++) {
+                    $('#countrySelect').append($('<option>', {
+                      value: countriesList[j].code,
+                      text: countriesList[j].name
+                    }));
+                  }
+      
+                  
+                  countryCode = $('#countrySelect option:first').val();
+                  const filterData = data.filter((a) => (a.iso3_code === countryCode));
+                  
+                  
+                  if (filterData.length > 0) {
+                    
+                    fetchCountryGeometry(countryCode);
+               
+                    
+                    
+                    countryCode = filterData[0].iso3_code;
+                    
+                    twoDigitCountryCode = filterData[0].iso2_code;
+                    
+                    countryName = filterData[0].name;
+                    
+                    fetchData(countryCode, twoDigitCountryCode, countryName);
+                    
+                    function modalHeader(iconClassOne, iconClassTwo) {
+                    
+                      
+                      const icon = document.createElement('i');
+                      icon.classList.add(iconClassOne, iconClassTwo);
+          
+                      
+                      const text = document.createElement('span');
+                      text.textContent = `${countryName}'s Country/Cities Information`;
+          
+                      
+                      const modalHeader = document.querySelector('.modal-title');
+                      modalHeader.innerHTML = ''; 
+                      modalHeader.appendChild(icon);
+                      modalHeader.appendChild(text);
+          
+                    }
+                    modalHeader('fa-solid', 'fa-flag');
+                    
+                  } 
+                  else {
+                    console.error('No matching country found:', countryCode);
+                  }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                  console.log("Error:", textStatus, errorThrown);
+                  console.log("There is an error");
+                }
+              });
+            }
+          break;
+        case error.POSITION_UNAVAILABLE:
+          console.log("Location information is unavailable.");
+          break;
+        case error.TIMEOUT:
+          console.log("The request to get user location timed out.");
+          break;
+        case error.UNKNOWN_ERROR:
+          console.log("An unknown error occurred.");
+          break;
+      }
+    }
 
   function showPosition(position) {
              
@@ -1171,8 +1376,18 @@ $(document).ready(function() {
     long = position.coords.longitude;
    
     countryCode = countryCoder.iso1A3Code([long, lat]);
+
     
-    var countryCodesArray = [];
+    
+    
+
+   
+        
+    getCountryCodes();
+       
+        
+      
+    }
 
     function getCountryCodes() {
       $.ajax({
@@ -1180,13 +1395,14 @@ $(document).ready(function() {
         type: 'POST',
         dataType: "json",
         success: function(data) {
+          var countryCodesArray = [];
           
           for (var i=0; i<data.data.iso2_codes.length; i++) {
             countryCodesArray.push(data.data.iso2_codes[i]);
           }
           
-
-          populateSelectTag();
+          getCountries(countryCodesArray);
+          
          
           
           
@@ -1200,181 +1416,304 @@ $(document).ready(function() {
       });
     }
 
-    getCountryCodes();
+    
+
+ 
   
 
-  function populateSelectTag(){
-  $.ajax({
-    url: "libs/php/getCountry.php",
-    type: 'POST',
-    dataType: "json",
-    
-    success: function(result) {
+ 
+
         
-        var totalCountries = 0;
-        for (var i=0; i<result.data.border.features.length; i++) {
-          var countryCodeMatch = result.data.border.features[i].properties.iso_a2;
-          if (countryCodesArray.includes(countryCodeMatch)) {
-          $('#countrySelect').append($('<option>', {
-              value: result.data.border.features[i].properties.iso_a3,
-              text: result.data.border.features[i].properties.name,
-          }));
-          totalCountries++;
-         }
-        }
-         
-        const filterData = result.data.border.features.filter((a) => (a.properties.iso_a3 === countryCode));
+
         
-        if (filterData.length > 0) {
-          border = L.geoJSON(filterData[0]).addTo(country);
-          border.setStyle({
-            color: 'blue',
-            fillColor: 'blue',
-            
+        function fetchCountryGeometry(countryCode) {
+          $.ajax({
+            url: "libs/php/getCountryGeometry.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+              countryCode: countryCode,
+            },
+        
+            success: function (data) {
+              
+              
+              border = L.geoJSON(data).addTo(country);
+              border.setStyle({
+                color: "blue",
+                fillColor: "blue",
+              });
+        
+              
+              if (border.getBounds().isValid()) {
+                map.fitBounds(border.getBounds());
+              }
+              
+              bounds = country.getBounds();
+              
+              center = bounds.getCenter();
+              
+
+              
+            },
+        
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log("Error:", textStatus, errorThrown);
+              console.log("There is an error");
+            },
           });
-          if (border.getBounds().isValid()) {
-            map.fitBounds(border.getBounds());
-          }
-          
-          $('#countrySelect').val(filterData[0].properties.iso_a3);
-          countryCode = filterData[0].properties.iso_a3;
-          twoDigitCountryCode = filterData[0].properties.iso_a2;
-          countryName = filterData[0].properties.name;
-          
-          function modalHeader(iconClassOne, iconClassTwo) {
-          
-            
-            const icon = document.createElement('i');
-            icon.classList.add(iconClassOne, iconClassTwo);
-
-            
-            const text = document.createElement('span');
-            text.textContent = `${countryName}'s Country/Cities Information`;
-
-            
-            const modalHeader = document.querySelector('.modal-title');
-            modalHeader.innerHTML = ''; 
-            modalHeader.appendChild(icon);
-            modalHeader.appendChild(text);
-
-          }
-          modalHeader('fa-solid', 'fa-flag');
-        } else {
-          console.error('No matching country found:', countryCode);
         }
+
+        function getCountries(countryCodesArray){
+        $.ajax({
+          url: "libs/php/getCountries.php",
+          type: "POST",
+          dataType: "json",
+          success: function(data) {
+            
+            
+            var countriesList = [];
         
-       
         
-    
-          
-         
-        
-         
-          
-     fetchData();
-
-
-
-
-
-
-
-
-
-     //
-
-     $('#countrySelect').change(function() {
-      modal();
-      $('#countryTable').show();
-      $('#earthQuakeTable').hide();
-      $('#wikiTable').hide();
-      $('#flightTable').hide();
-      $('#weatherTable').hide();
-      $('#cityDestinationTable').hide();
-      $('.modal-header').css('background-color', 'green');
-  
-    
-     let name = $('#countrySelect').val();
-     
-     $.ajax({
-        url: "libs/php/getCountry.php",
-        type: 'POST',
-        dataType: 'json',
-        success: function(result) {
-          
-          window.weatherMarkers.clearLayers();
-          window.earthquakeMarkers.clearLayers();
-          
-          window.wikiMarkers.clearLayers();
-          window.countryMarkers.clearLayers();
-          window.planeMarkers.clearLayers();
-          window.cityDestinationMarkers.clearLayers();
-          
-          window.country.clearLayers();
-          var weatherMarkers = window.weatherMarkers;
-          var earthquakeMarkers = window.earthquakeMarkers;
-          var wikiMarkers = window.wikiMarkers;
-          var countryMarkers = window.countryMarkers;
-          var planeMarkers = window.planeMarkers;
-          var cityDestinationMarkers = window.cityDestinationMarkers;
-          window.country.removeLayer(weatherMarkers);
-          window.country.removeLayer(earthquakeMarkers);
-          window.country.removeLayer(wikiMarkers);
-          window.country.addLayer(countryMarkers);
-          window.country.removeLayer(planeMarkers);
-  
-          window.country.removeLayer(cityDestinationMarkers);
-          
-          
-          const filterData = result.data.border.features.filter((a) => (a.properties.iso_a3 === name));
-          border = L.geoJSON(filterData[0]);
-          border.addTo(country);
-          border.setStyle({
-            color: 'blue',
-            fillColor: 'blue',
-            
-          });
-          if (!map.hasLayer(window.country)) {
-            map.addLayer(window.country); 
-          }
-          map.fitBounds(border.getBounds());
-          
-          countryCode = filterData[0].properties.iso_a3;
-          twoDigitCountryCode = filterData[0].properties.iso_a2;
-          countryName = filterData[0].properties.name;
-          function modalHeader(iconClassOne, iconClassTwo) {
-          
-            
-            const icon = document.createElement('i');
-            icon.classList.add(iconClassOne, iconClassTwo);
-
-            
-            const text = document.createElement('span');
-            text.textContent = `${countryName}'s Country/Cities Information`;
-
-            
-            const modalHeader = document.querySelector('.modal-title');
-            modalHeader.innerHTML = ''; 
-            modalHeader.appendChild(icon);
-            modalHeader.appendChild(text);
-
-          }
-          modalHeader('fa-solid', 'fa-flag');
-          
-          
-          fetchData();
-       
-            }})
-            
-        
-          
-  
-  
+            for (var i = 0; i < data.length; i++) {
+              var countryCodeMatch = data[i].iso2_code;
+              if (countryCodesArray.includes(countryCodeMatch)) {
+                var countryItem = {
+                  code: data[i].iso3_code,
+                  name: data[i].name
+                };
+                countriesList.push(countryItem);
                 
-   
-  
+              }
+            }
+      
+            countriesList.sort(function(a, b) {
+              var nameA = a.name.toUpperCase();
+              var nameB = b.name.toUpperCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                return 1;
+              }
+              return 0;
+            });
+            
+            
+            for (var j = 0; j < countriesList.length; j++) {
+              $('#countrySelect').append($('<option>', {
+                value: countriesList[j].code,
+                text: countriesList[j].name
+              }));
+            }
+
+            
+            const filterData = data.filter((a) => (a.iso3_code === countryCode));
+            
+            
+            if (filterData.length > 0) {
+              
+              fetchCountryGeometry(countryCode);
+         
+              
+              $('#countrySelect').val(filterData[0].iso3_code);
+              countryCode = filterData[0].iso3_code;
+              
+              twoDigitCountryCode = filterData[0].iso2_code;
+              countryName = filterData[0].name;
+              
+              fetchData(countryCode, twoDigitCountryCode, countryName);
+              
+              function modalHeader(iconClassOne, iconClassTwo) {
+              
+                
+                const icon = document.createElement('i');
+                icon.classList.add(iconClassOne, iconClassTwo);
+    
+                
+                const text = document.createElement('span');
+                text.textContent = `${countryName}'s Country/Cities Information`;
+    
+                
+                const modalHeader = document.querySelector('.modal-title');
+                modalHeader.innerHTML = ''; 
+                modalHeader.appendChild(icon);
+                modalHeader.appendChild(text);
+    
+              }
+              modalHeader('fa-solid', 'fa-flag');
+              
+            } 
+            else {
+              console.error('No matching country found:', countryCode);
+            }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Error:", textStatus, errorThrown);
+            console.log("There is an error");
+          }
+        });
+      }
          
         
+         
+          
+     
+
+
+
+
+
+
+    
+            
+        
+          
+  
+  
+            $('#countrySelect').change(function() {
+              modal();
+              $('#countryTable').show();
+              $('#earthQuakeTable').hide();
+              $('#wikiTable').hide();
+              $('#flightTable').hide();
+              $('#weatherTable').hide();
+              $('#cityDestinationTable').hide();
+              $('.modal-header').css('background-color', 'green');
+
+              
+          
+            
+            let name = $('#countrySelect').val();
+            getCountriesSelect();
+            function fetchCountryGeometrySelect(countryCode) {
+              $.ajax({
+                url: "libs/php/getCountryGeometry.php",
+                type: "POST",
+                dataType: "json",
+                data: {
+                  countryCode: countryCode,
+                },
+            
+                success: function (data) {
+
+                  
+
+               
+                  
+                  
+                  border = L.geoJSON(data).addTo(country);
+                  border.setStyle({
+                    color: "blue",
+                    fillColor: "blue",
+                  });
+            
+                  
+                
+                  if (!map.hasLayer(window.country)) {
+                    map.addLayer(window.country); 
+                  }
+                  map.fitBounds(border.getBounds());
+                  bounds = country.getBounds();
+                  center = bounds.getCenter();
+                  
+    
+                  
+                },
+            
+                error: function (jqXHR, textStatus, errorThrown) {
+                  console.log("Error:", textStatus, errorThrown);
+                  console.log("There is an error");
+                },
+              });
+            }
+    
+
+
+
+            function getCountriesSelect(){
+            $.ajax({
+              url: "libs/php/getCountries.php",
+              type: "POST",
+              dataType: "json",
+              success: function(data) {
+                window.weatherMarkers.clearLayers();
+                window.earthquakeMarkers.clearLayers();
+                
+                window.wikiMarkers.clearLayers();
+                window.countryMarkers.clearLayers();
+                window.planeMarkers.clearLayers();
+                window.cityDestinationMarkers.clearLayers();
+                
+                window.country.clearLayers();
+                var weatherMarkers = window.weatherMarkers;
+                var earthquakeMarkers = window.earthquakeMarkers;
+                var wikiMarkers = window.wikiMarkers;
+                var countryMarkers = window.countryMarkers;
+                var planeMarkers = window.planeMarkers;
+                var cityDestinationMarkers = window.cityDestinationMarkers;
+                window.country.removeLayer(weatherMarkers);
+                window.country.removeLayer(earthquakeMarkers);
+                window.country.removeLayer(wikiMarkers);
+                window.country.addLayer(countryMarkers);
+                window.country.removeLayer(planeMarkers);
+        
+                window.country.removeLayer(cityDestinationMarkers);
+                
+               
+    
+                
+                const filterData = data.filter((a) => (a.iso3_code === name));
+                
+                
+                
+                if (filterData.length > 0) {
+                  
+                  fetchCountryGeometrySelect(name);
+             
+                  
+                  
+                  countryCode = filterData[0].iso3_code;
+                  
+                  twoDigitCountryCode = filterData[0].iso2_code;
+                  
+                  countryName = filterData[0].name;
+                  
+                  fetchData(countryCode, twoDigitCountryCode, countryName);
+                  
+                  function modalHeader(iconClassOne, iconClassTwo) {
+                  
+                    
+                    const icon = document.createElement('i');
+                    icon.classList.add(iconClassOne, iconClassTwo);
+        
+                    
+                    const text = document.createElement('span');
+                    text.textContent = `${countryName}'s Country/Cities Information`;
+        
+                    
+                    const modalHeader = document.querySelector('.modal-title');
+                    modalHeader.innerHTML = ''; 
+                    modalHeader.appendChild(icon);
+                    modalHeader.appendChild(text);
+        
+                  }
+                  modalHeader('fa-solid', 'fa-flag');
+                  
+                } 
+                else {
+                  console.error('No matching country found:', countryCode);
+                }
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Error:", textStatus, errorThrown);
+                console.log("There is an error");
+              }
+            });
+          }
+  
+         
+        })
           
   
   
@@ -1382,7 +1721,7 @@ $(document).ready(function() {
   
   
    
-  })
+  
   
   
   
@@ -1409,7 +1748,7 @@ $(document).ready(function() {
      var countryButton = L.easyButton({
       states: [{
           icon: '<div class="easy-button"><i style="color: green;" class="fa-solid fa-flag country-button-icon"></i></div>',
-          title: 'Show wiki markers',
+          title: 'Show Country/Cities Info Markers',
           onClick: function(btn, map){
               
               country.removeLayer(earthquakeMarkers);
@@ -1464,7 +1803,7 @@ $(document).ready(function() {
   var weatherButton = L.easyButton({
       states: [{
         icon: '<div class="easy-button text-center"><i style="color: blue;" class="fas fa-cloud weather-button-icon"></i></div>',
-          title: 'Show weather markers',
+          title: 'Show Weather Markers',
           onClick: function(btn, map){
               
               country.removeLayer(earthquakeMarkers);
@@ -1518,7 +1857,7 @@ $(document).ready(function() {
   var earthquakeButton = L.easyButton({
       states: [{
           icon: '<div class="easy-button"><i style="color: red;" class="fas fa-exclamation-triangle earthquake-button-icon"></i></div>',
-          title: 'Show earthquake markers',
+          title: 'Show Earthquake Markers',
           onClick: function(btn, map){
               
               country.addLayer(earthquakeMarkers);
@@ -1566,7 +1905,7 @@ $(document).ready(function() {
   
   var wikiButton = L.easyButton({
       states: [{
-          icon: '<div class="easy-button"><i  class="fa fa-wikipedia-w wiki-button-icon"></i></div>',
+          icon: '<div class="easy-button"><i style="color: black;" class="fa-brands fa-wikipedia-w wiki-button-icon"></i></div>',
           title: 'Show Wiki Markers',
           onClick: function(btn, map){
               
@@ -1618,7 +1957,7 @@ $(document).ready(function() {
   var planeButton = L.easyButton({
     states: [{
         icon: '<div class="easy-button"><i style="color: #ffbb00;" class="fa-solid fa-plane plane-button-icon"></i></div>',
-        title: 'Show Airport Markers',
+        title: 'Show Flight Markers',
         onClick: function(btn, map){
             
             country.removeLayer(earthquakeMarkers);
@@ -1665,40 +2004,47 @@ $(document).ready(function() {
             });
 
             function addFlightDataToTable(flight) {
-              let $tr = $('<tr>').attr('id', 'flightData');
-            
-              
-              let $iconTd = $('<td>').addClass('icon-td');
-            
-              let $icon = $('<i>').addClass('fa-solid fa-plane icon');
-            
-              let $flightInfo = $('<div>').html(
-                '<img src="https://flagsapi.com/' + flight.flag + '/flat/64.png"> ' +
-                flight.flag + '<br>' +
-                'Aircraft: ' + flight.aircraft_icao + '<br>' +
-                'Hex: ' + flight.hex + '<br>' +
-                'Reg: ' + flight.reg_number
-              ).addClass('flight-info');
-            
-              $iconTd.append($icon, $flightInfo);
-            
-              
-              let $valueTd = $('<td>').addClass('value-td');
-            
-              let $speed = $('<div>').text('Speed: ' + (flight.speed ? flight.speed + ' kph' : 'No Data')).addClass('speed');
-            
-              let $alt = $('<div>').text('Altitude: ' + (flight.alt ? flight.alt + ' m' : 'No Data')).addClass('altitude');
-            
-              let $geo = $('<div>').text('GEO: ' + (flight.lat && flight.lng ? flight.lat + ',' + flight.lng : 'No Data')).addClass('geo');
-            
-              let $direction = $('<div>').text('Direction: ' + (flight.dir ? flight.dir + '°' : 'No Data')).addClass('direction');
-            
-              $valueTd.append($speed, $alt, $geo, $direction);
-            
-              $tr.append($iconTd, $valueTd);
-            
-              $('#flightTable tbody').append($tr);
-            }
+                let $tr = $('<tr>').attr('id', 'flightData');
+                
+                let $iconTd = $('<td>').addClass('icon-td');
+                
+                let $icon = $('<i>').addClass('fa-solid fa-plane icon');
+                
+                let $flightInfo = $('<div>').html(
+                  '<img src="https://flagsapi.com/' + flight.flag + '/flat/64.png"> ' +
+                  flight.flag + '<br>' +
+                  'Aircraft: ' + flight.aircraft_icao + '<br>' +
+                  'Hex: ' + flight.hex + '<br>' +
+                  'Reg: ' + flight.reg_number
+                ).addClass('flight-info');
+                
+                $iconTd.append($icon, $flightInfo);
+                
+                let $valueTd = $('<td>').addClass('value-td');
+                
+                let $speed = $('<div>').text('Speed: ' + (flight.speed ? numberWithCommas(flight.speed) + ' kph' : 'No Data')).addClass('speed');
+                
+                let $alt = $('<div>').text('Altitude: ' + (flight.alt ? numberWithCommas(flight.alt) + ' m' : 'No Data')).addClass('altitude');
+
+                let $lat = $('<div>').text('Latitude: ' + (flight.lat && flight.lat ? flight.lat.toFixed(4) : 'No Data')).addClass('lat');
+
+                let $lng = $('<div>').text('Longitude: ' + (flight.lng && flight.lng ? flight.lng.toFixed(4) : 'No Data')).addClass('lng');
+                
+                let $direction = $('<div>').text('Direction: ' + (flight.dir ? flight.dir + '°' : 'No Data')).addClass('direction');
+                
+                $valueTd.append($speed, $alt, $lat, $lng, $direction);
+                
+                $tr.append($iconTd, $valueTd);
+                
+                $('#flightTable tbody').append($tr);
+              }
+
+              function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              }
+
+
+        
             
           
             
@@ -1758,9 +2104,10 @@ $(document).ready(function() {
                   Aircraft: ${flight.aircraft_icao}<br>
                   Hex: ${flight.hex}<br>
                   Reg: ${flight.reg_number}<br>
-                  Speed: ${flight.speed} kph<br>
-                  Alt: ${flight.alt} m<br>
-                  GEO: ${flight.lat},${flight.lng}<br>
+                  Speed: ${numberWithCommas(flight.speed)} kph<br>
+                  Alt: ${numberWithCommas(flight.alt)} m<br>
+                  Latitude: ${flight.lat.toFixed(4)}<br>
+                  Longitude: ${flight.lng.toFixed(4)}<br>
                   Direction: ${flight.dir}&deg;
                   </div>
                 
@@ -1900,7 +2247,7 @@ $(document).ready(function() {
 
 
 
-  }})
+  })
 
-}}})
+
 

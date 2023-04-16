@@ -3,11 +3,11 @@
 * {
   box-sizing: border-box;
 }
-body {
+.body {
   padding: 0;
   margin: 0;
   font-family: "Quicksand", sans-serif;
-  overflow-y: scroll;
+  
 }
 
 .container-fluid {
@@ -21,9 +21,12 @@ body {
   align-items: center;
 }
 
-#map {
-  width: 100%;
-  height: 100%;
+
+
+html,
+.body {
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
@@ -33,12 +36,18 @@ body {
   }
 }
 
-html,
-body,
+
+
 #map {
-  height: 100%;
   width: 100%;
+  height: calc(100vh - 70px);
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
+
 
 #modal {
   width: 100%;
@@ -46,6 +55,7 @@ body,
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  overflow-y: hidden;
 }
 
 .modal-dialog {
@@ -1081,11 +1091,17 @@ i {
 
 #flightData .speed,
 #flightData .altitude,
-#flightData .geo,
-#flightData .direction {
+#flightData .lat,
+#flightData .lng {
   font-size: 16px;
   color: #333;
   margin-bottom: 5px;
+}
+
+#flightData .direction {
+  font-size: 16px;
+  color: #333;
+  
 }
 
 .leaflet-control-zoom-in:before,

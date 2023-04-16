@@ -33,7 +33,7 @@ $citySlug = $data['data'][0]['attributes']['slug'];
 
 $output = array(
   'citySlug' => $citySlug,
-  'executionTime' => (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) * 1000 // execution time in ms
+  'executionTime' => (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) * 1000 
 );
 
 
