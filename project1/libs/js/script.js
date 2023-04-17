@@ -1004,6 +1004,7 @@ var maxBoundArea = L.latLngBounds(southWest, northEast);
                         success: function(data) {
                          
                          
+                         
                           weatherData = data.data;
                           addWeatherDataToTable(weatherData);
           
@@ -2003,6 +2004,9 @@ $(document).ready(function() {
               clusteredLayerSupport: true,
             });
 
+         
+            
+
             function addFlightDataToTable(flight) {
                 let $tr = $('<tr>').attr('id', 'flightData');
                 
@@ -2062,8 +2066,11 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data) {
                 
-    
+                
+                  
                   for (var i = 0; i < data.response.length; i++) {
+                  
+                    
                     var flight = data.response[i];
                     addFlightDataToTable(flight);
                     
@@ -2138,7 +2145,7 @@ $(document).ready(function() {
                 
                 
                 
-    
+                
     
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
