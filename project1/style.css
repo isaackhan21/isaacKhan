@@ -466,20 +466,18 @@ i {
   }
 }
 
-.modal-title i.fa-brands {
-  font-size: 1rem;
-  margin-right: 0.3rem;
-}
+
 
 .modal-title {
   font-size: 1.5rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 
 }
 
 @media only screen and (max-width: 600px) {
   .modal-title {
-    font-size: 1.2rem; 
+    font-size: 1rem;
+    margin-left: 0;
   }
 }
 
@@ -1414,6 +1412,7 @@ img[src="dist/img/Image_not_available.png"] {
   .news-row {
     width: 100%;
     flex-direction: column;
+    justify-content: center;
     align-items: flex-start;
   }
 
@@ -1432,7 +1431,7 @@ img[src="dist/img/Image_not_available.png"] {
 
   .news-row td {
     
-    padding-bottom: 20px;
+    
     width: 100%;
     display: block;
   }
@@ -1455,6 +1454,7 @@ img[src="dist/img/Image_not_available.png"] {
     align-items: center;
     padding-right: 40px;
     padding-left: 60px;
+    padding-bottom: 20px;
     
    
   }
@@ -1473,7 +1473,7 @@ img[src="dist/img/Image_not_available.png"] {
 
   .img-thumbnail {
     margin-right: 0;
-    margin-bottom: 20px;
+    
   }
 }
 
@@ -1550,6 +1550,14 @@ img[src="dist/img/Image_not_available.png"] {
   padding-right: 30px; 
 }
 
+@media only screen and (max-width: 600px) {
+  #weatherTable td:first-child {
+    width: 1%; 
+    padding-left: 10px; 
+    padding-right: 10px;
+  }
+}
+
 
 
 
@@ -1615,7 +1623,13 @@ img[src="dist/img/Image_not_available.png"] {
   background-color: #F6FFF1; 
 }
 
-
+@media only screen and (max-width: 600px) {
+  #countryTable td:first-child {
+    width: 1%; 
+    padding-left: 10px; 
+    padding-right: 10px;
+  }
+}
 
 .no-data-row {
   width: 100%;
