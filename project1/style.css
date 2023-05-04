@@ -1069,7 +1069,7 @@ h3 i.fa-exclamation-triangle {
 }
 
 .modal-body {
-  overflow-x: scroll;
+  overflow-x: auto;
   height: 100%;
 }
 
