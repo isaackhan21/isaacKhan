@@ -3,7 +3,7 @@ $countryCode = $_REQUEST['countryCode'];
 
 
 require_once 'config.php';
-$url = "https://airlabs.co/api/v9/flights?flag=$countryCode&api_key=$trackFlightsApiKey";
+$url = "https://airlabs.co/api/v9/airports?country_code=$countryCode&api_key=$airportsApiKey";
 
 
 $ch = curl_init();
