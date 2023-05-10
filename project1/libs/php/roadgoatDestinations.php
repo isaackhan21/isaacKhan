@@ -5,11 +5,7 @@ require_once 'config.php';
 $ACCESS_KEY = $roadGoatAccessKey;
 $SECRET_KEY = $roadGoatSecretKey;
 
-
-
-
 $citySlug = $_GET['citySlug'];
-
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "https://api.roadgoat.com/api/v2/destinations/{$citySlug}");
@@ -18,16 +14,18 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   "Authorization: Basic " . base64_encode("{$ACCESS_KEY}:{$SECRET_KEY}")
 ));
 
-
 $response = curl_exec($ch);
-
-
 curl_close($ch);
-
 
 $data = json_decode($response, true);
 
+if ($data === null) {
+    $errorData = array('error' => 'RoadGoat Marker Not Found');
+    header('Content-Type: application/json');
+    echo json_encode($errorData);
+} else {
+    header('Content-Type: application/json');
+    echo json_encode($data);
+}
 
-header('Content-Type: application/json');
-echo json_encode($data);
 ?>

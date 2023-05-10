@@ -34,6 +34,10 @@
     <title>Gazetteer</title>
   </head>
   <body class="body">
+    <div id="preloader">
+      <div id="loader"></div>
+    </div>
+    
     <span id="selectContainer">
       <select
         id="countrySelect"
@@ -41,11 +45,16 @@
         class="form-select"
         aria-label="Select Country"
       ></select>
-    </div>
+    
+    
     </span>
+    <div id="alerts-container"></div>
  
+    
+
 
     <div class="container-fluid">
+      
       <div id="map"></div>
       <div>
         <div class="modal fade modal-xl" id="modal">
@@ -78,9 +87,11 @@
                 </div>
               </div>
               
-             
+              
                 <div id="images-container"></div>
+               
                 <div class="table-responsive">
+                 
                   <table id="news-table" class="table table-striped">
                     <thead>
                      
@@ -90,6 +101,7 @@
                   </table>
                 </div>
                 <div>
+                  
                   <table id="exchange-rates-table" class="table table-striped">
                     <thead>
                       <tr>

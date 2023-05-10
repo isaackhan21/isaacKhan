@@ -3,6 +3,9 @@ var center;
 var weatherData;
 var weatherDataName;
 var weatherDataCountry;
+var notFound = false;
+
+
 
 if (this.map) {
   this.map.remove();
@@ -133,6 +136,30 @@ var planeMarkersGroup = L.markerClusterGroup.layerSupport({
 });
 
 function fetchData(countryCode, twoDigitCountryCode, countryName) {
+  $('#preloader').show();
+ 
+  
+  function displayAlert(message) {
+    const id = Date.now().toString(); 
+    const container = document.getElementById('alerts-container');
+    const alert = document.createElement('div');
+    alert.classList.add('alert', 'alert-danger', 'alert-dismissible', 'fade', 'show');
+    alert.setAttribute('role', 'alert');
+    alert.setAttribute('id', id);
+    alert.innerHTML = `
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    container.insertBefore(alert, container.firstChild); 
+  
+    
+    setTimeout(() => {
+      const alertToRemove = document.getElementById(id);
+      if (alertToRemove) {
+        container.removeChild(alertToRemove);
+      }
+    }, 5000);
+  }
 
 
   var customCountryMarker;
@@ -270,7 +297,7 @@ function getAllRestCountries() {
     type: "POST",
     dataType: "json",
     success: function (data) {
-      console.log(data);
+      
 
       var countries = [];
 
@@ -418,6 +445,7 @@ getCurrenciesData();
   getBoundingBoxes();
 
 
+  
 
   var northCoord;
   var southCoord;
@@ -432,22 +460,34 @@ getCurrenciesData();
       type: "POST",
       dataType: "json",
       success: function (data) {
+        
         bboxes = data.data.bboxes;
-
-        northCoord = bboxes[String(twoDigitCountryCode)][1][3];
-
-        southCoord = bboxes[String(twoDigitCountryCode)][1][1];
-        eastCoord = bboxes[String(twoDigitCountryCode)][1][2];
-        westCoord = bboxes[String(twoDigitCountryCode)][1][0];
-      
-
-        getCities(northCoord, southCoord, eastCoord, westCoord);
-        fetchCountryData(countryCode);
-        getCityData(twoDigitCountryCode);
-
-        getEarthquakeData(northCoord, southCoord, eastCoord, westCoord);
-        getWikiData(northCoord, southCoord, eastCoord, westCoord);
-       
+  
+        if (bboxes.hasOwnProperty(twoDigitCountryCode)) {
+          northCoord = bboxes[String(twoDigitCountryCode)][1][3];
+          southCoord = bboxes[String(twoDigitCountryCode)][1][1];
+          eastCoord = bboxes[String(twoDigitCountryCode)][1][2];
+          westCoord = bboxes[String(twoDigitCountryCode)][1][0];
+  
+          
+          getCities(northCoord, southCoord, eastCoord, westCoord);
+          fetchCountryData(countryCode);
+          getCityData(twoDigitCountryCode);
+  
+          getEarthquakeData(northCoord, southCoord, eastCoord, westCoord);
+          getWikiData(northCoord, southCoord, eastCoord, westCoord);
+        } else {
+          $('#preloader').hide();
+          $('#countryTable tbody').empty().append('<tr><td colspan="6" class="text-center">No Data</td></tr>');
+          $('#weatherTable tbody').empty().append('<tr><td colspan="6" class="text-center">No Data</td></tr>');
+          displayAlert("RoadGoat Markers Not Found")
+          displayAlert("Country Info Not Found")
+          displayAlert("Weather Not Found")
+          displayAlert("Cities Not Found")
+          displayAlert("Earthquake Markers Not Found")
+          displayAlert("Wikipedia Markers Not Found")
+          notFound = true;
+        }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("Error:", textStatus, errorThrown);
@@ -455,6 +495,9 @@ getCurrenciesData();
       },
     });
   }
+  
+  
+  
 
 
 
@@ -511,6 +554,7 @@ getCurrenciesData();
       },
       dataType: "json",
       success: function (data) {
+        $('#images-table-preloader').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
         var imagesContainer = $("#images-container");
         imagesContainer.empty();
   
@@ -527,15 +571,16 @@ getCurrenciesData();
             imagesContainer.append(gridItem);
           }
         } else {
-          var noDataRow = $("<tr></tr>").append("<td colspan='2'>No Image Data</td>");
+          var noDataRow = $("<tr></tr>").append("<td class='text-center' colspan='6'>No Image Data</td>");
           imagesContainer.append(noDataRow);
         }
+        
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("Error:", textStatus, errorThrown);
         var imagesContainer = $("#images-container");
         imagesContainer.empty();
-        var noDataRow = $("<tr></tr>").append("<td colspan='2'>No Data</td>");
+        var noDataRow = $("<tr class='no-data-row'></tr>").append("<td colspan='3'><div class='no-data-div'>No Data</div></td>");
         imagesContainer.append(noDataRow);
       },
     });
@@ -549,62 +594,75 @@ getCurrenciesData();
   
   
   
-  
+
 
   function getNewsData(countryCode) {
     $.ajax({
-      type: "GET",
-      url: "libs/php/worldNewsAPI.php",
-      data: {
-        countryCode: countryCode,
-      },
-      dataType: "json",
-      success: function (data) {
-  
-        var newsTable = $("#news-table tbody");
-        newsTable.empty();
-  
-        var hasNewsArticles = data.news.length > 0;
-  
-        if (hasNewsArticles) {
-          var i = 0;
-          var delay = 500;
-  
-          var loop = function () {
-            var article = data.news[i];
-            var row = $("<tr class='news-row'></tr>");
-            row.append("<td><img src='" + (article.image || "no-image") + "' class='img-thumbnail' onerror='this.onerror=null;this.src=\"dist/img/Image_not_available.png\"; this.alt=\"No Image Available\";'></td>");
-  
-            var articleDetails = $("<td></td>");
-            articleDetails.append("<h5>" + (article.title || "No Data") + "</h5>");
-            articleDetails.append("<div class='news-details'><p class='article-text'>" + (article.text || "No Data") + "</p><div class='publish-date'>" + formatDate(article.publish_date) + "</div><div class='news-link'><a href='" + (article.url || "#") + "' target='_blank'>Read More</a></div></div>");
-            row.append(articleDetails);
-  
-            newsTable.append(row);
-  
-            i++;
-            if (i < data.news.length) {
-              setTimeout(loop, delay);
-            }
-          };
-  
-          loop();
-        }
-  
-        if (!hasNewsArticles) {
-          newsTable.append("<tr id='no-news-row'><td colspan='2'>No News Articles</td></tr>");
-        } else {
-          $("#no-news-row").remove();
-        }
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log("Error:", textStatus, errorThrown);
-        var newsTable = $("#news-table tbody");
-        newsTable.empty();
-        newsTable.append("<tr><td colspan='2'>No Data</td></tr>");
-      },
+        type: "GET",
+        url: "libs/php/worldNewsAPI.php",
+        data: {
+            countryCode: countryCode,
+        },
+        dataType: "json",
+        success: function (data) {
+            
+            
+                var newsTable = $("#news-table tbody");
+                newsTable.empty();
+
+                
+                var hasNewsArticles = data.news.length > 0;
+                
+
+                if (hasNewsArticles) {
+                    var i = 0;
+                    var delay = 500;
+
+                    var loop = function () {
+                        var article = data.news[i];
+                        var row = $("<tr class='news-row'></tr>");
+                        
+                
+                        
+                        var imageSrc = article.image ? article.image : "dist/img/Image_not_available.png";
+                        
+
+                        
+                        row.append("<td><img src='" + imageSrc + "' onerror=\"this.src='dist/img/Image_not_available.png'\" class='img-thumbnail'></td>");
+
+                        var articleDetails = $("<td></td>");
+                        articleDetails.append("<h5>" + (article.title || "No Data") + "</h5>");
+                        articleDetails.append("<div class='news-details'><p class='article-text'>" + (article.text || "No Data") + "</p><div class='publish-date'>" + formatDate(article.publish_date) + "</div><div class='news-link'><a href='" + (article.url || "#") + "' target='_blank'>Read More</a></div></div>");
+                        row.append(articleDetails);
+
+                        newsTable.append(row);
+
+                        i++;
+                        if (i < data.news.length) {
+                            setTimeout(loop, delay);
+                        }
+                    };
+
+                    loop();
+                }
+
+                if (!hasNewsArticles) {
+                    newsTable.append("<tr id='no-news-row'><td colspan='2'>No News Articles</td></tr>");
+                } else {
+                    $("#no-news-row").remove();
+                }
+            
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Error:", textStatus, errorThrown);
+            var newsTable = $("#news-table tbody");
+            newsTable.empty();
+            newsTable.append("<tr><td colspan='2'>No Data</td></tr>");
+        },
     });
-  }
+}
+
+
   
 
 function formatDate(dateString) {
@@ -658,15 +716,21 @@ function formatDate(dateString) {
       },
       dataType: "json",
       success: function (response) {
-        response.data.forEach((eq) => {
-          getEarthquakeCoordData(
-            eq.lat,
-            eq.lng,
-            eq.magnitude,
-            eq.depth,
-            eq.datetime
-          );
-        });
+       
+  
+        if (response.data.length === 0) {
+          displayAlert(response.status.description)
+        } else {
+          response.data.forEach((eq) => {
+            getEarthquakeCoordData(
+              eq.lat,
+              eq.lng,
+              eq.magnitude,
+              eq.depth,
+              eq.datetime
+            );
+          });
+        }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("Error:", textStatus, errorThrown);
@@ -674,8 +738,13 @@ function formatDate(dateString) {
       },
     });
   }
+  
   var earthquakeLocation;
   var earthquakeMarker;
+
+
+ 
+  
   function getEarthquakeCoordData(lat, lng, magnitude, depth, datetime) {
     $.ajax({
       type: "GET",
@@ -686,37 +755,50 @@ function formatDate(dateString) {
       },
       dataType: "json",
       success: function (response) {
-        earthquakeLocation = response.results[0].formatted;
+        try {
+          earthquakeLocation = response.data.formatted;
   
-        earthquakeMarker = L.circleMarker([lat, lng], {
-          radius: magnitude * 2,
-          color: "red",
-          fillColor: "#f03",
-          fillOpacity: 0.5,
-        });
+          earthquakeMarker = L.circleMarker([lat, lng], {
+            radius: magnitude * 2,
+            color: "red",
+            fillColor: "#f03",
+            fillOpacity: 0.5,
+          });
   
+          let formattedMagnitude = numeral(magnitude).format("0.00");
+  
+          let formattedDepth = numeral(depth).format("0.00");
+  
+          let formattedDatetime = new Date(datetime).toLocaleString();
+  
+          if (
+            !earthquakeLocation ||
+            !formattedMagnitude ||
+            !formattedDepth ||
+            !formattedDatetime
+          ) {
+            console.log("Error: Missing earthquake data");
+            return;
+          }
+  
+          earthquakeMarker.bindPopup(`<div class="earthquake-location">
+              <h3><i class="fas fa-exclamation-triangle"></i> Earthquake Location</h3>
+              <h6>${earthquakeLocation}</h6>
+            </div>
+            <br>
+            <div class="earthquake-info">
+              <div><b>Date/Time:</b> ${formattedDatetime}</div>
+              <div><b>Depth:</b> ${formattedDepth} km</div>
+              <div><b>Magnitude:</b> ${formattedMagnitude}</div>
+            </div>
+          `);
+  
+          earthquakeMarkersGroup.addLayer(earthquakeMarker);
+        } catch (error) {
+          displayAlert(response.status.message);
         
-        let formattedMagnitude = numeral(magnitude).format("0.00");
-  
-        
-        let formattedDepth = numeral(depth).format("0.00");
-  
-        
-        let formattedDatetime = new Date(datetime).toLocaleString();
-  
-        earthquakeMarker.bindPopup(`<div class="earthquake-location">
-            <h3><i class="fas fa-exclamation-triangle"></i> Earthquake Location</h3>
-            <h6>${earthquakeLocation}</h6>
-          </div>
-          <br>
-          <div class="earthquake-info">
-            <div><b>Date/Time:</b> ${formattedDatetime}</div>
-            <div><b>Depth:</b> ${formattedDepth} km</div>
-            <div><b>Magnitude:</b> ${formattedMagnitude}</div>
-          </div>
-        `);
-  
-        earthquakeMarkersGroup.addLayer(earthquakeMarker);
+
+        }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("Error:", textStatus, errorThrown);
@@ -724,6 +806,7 @@ function formatDate(dateString) {
       },
     });
   }
+  
   
   
 
@@ -748,6 +831,7 @@ function formatDate(dateString) {
       },
       dataType: "json",
       success: function (data) {
+        
         wikiData = data.data;
 
         for (var i = 0; i < wikiData.length; i++) {
@@ -815,7 +899,7 @@ function formatDate(dateString) {
 
   function getCities(north, south, east, west) {
     $.ajax({
-      type: "POST",
+      type: "GET",
       url: "libs/php/cities.php",
       data: {
         north: north,
@@ -825,6 +909,8 @@ function formatDate(dateString) {
       },
       dataType: "json",
       success: function (data) {
+        
+        try {
         geonamesData = data.data;
 
         for (let i = 0; i < geonamesData.length; i++) {
@@ -842,9 +928,14 @@ function formatDate(dateString) {
 
           getRoadGoatSlugData(cityUpperCase);
         }
+        
+      } catch(error) {
+        displayAlert(data.status.description);
+      }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("Error:", textStatus, errorThrown);
+        
       },
     });
   }
@@ -902,7 +993,10 @@ function formatDate(dateString) {
   
           countryMarkersGroup.addLayer(cityInfoMarker);
           country.addLayer(countryMarkersGroup);
+          
         }
+        $('#preloader').hide();
+        
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("Error:", textStatus, errorThrown);
@@ -926,11 +1020,10 @@ function formatDate(dateString) {
       success: function (response) {
         if (response !== null) {
           roadGoatCitySlug = response.citySlug;
+          
 
           getRoadGoatData(roadGoatCitySlug);
-        } else {
-          console.log("Response is null");
-        }
+        } 
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("Error:", textStatus, errorThrown);
@@ -950,6 +1043,8 @@ function formatDate(dateString) {
       },
       dataType: "json",
       success: function (data) {
+        
+        try {
         const covidData = data.data.attributes.covid;
 
         const city_short_name = data.data.attributes.short_name;
@@ -1072,6 +1167,10 @@ function formatDate(dateString) {
                         </div>
                         `);
         cityDestinationsMarkersGroup.addLayer(cityMarker);
+          } catch (error) {
+            
+            displayAlert(data.error);
+          }
        
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -1096,58 +1195,65 @@ function formatDate(dateString) {
 
   function getAirportData(countryCode) {
     $.ajax({
-      type: "GET",
-      url: "libs/php/airportsAPI.php",
-      data: {
-        countryCode: countryCode,
-      },
-      dataType: "json",
-      success: function (data) {
-        for (var i = 0; i < 10; i++) {
-          var airport = data.response[i];
-          var latLng = L.latLng(airport.lat, airport.lng);
-          var marker = L.marker(latLng, {
-            icon: airportMarkerIcon
-          }).addTo(planeMarkersGroup);
-          
-          var popularityFormatted = airport.popularity
-            ? numeral(airport.popularity).format('0,0')
-            : 'No Data';
-          
-          var latitudeFormatted = airport.lat
-            ? numeral(airport.lat).format('0.0000')
-            : 'No Data';
+        type: "GET",
+        url: "libs/php/airportsAPI.php",
+        data: {
+            countryCode: countryCode,
+        },
+        dataType: "json",
+        success: function (data) {
+          try {
             
-          var longitudeFormatted = airport.lng
-            ? numeral(airport.lng).format('0.0000')
-            : 'No Data';
-          
-          var popupHtml = `   <div class="airport-details">
-            <i class="fas fa-plane airport-icon"></i>
-            <br>
-            <h1 class="airport-name">${airport.name ? airport.name : "No Data"}</h1>
-  
-            <div class="airport-city">City: ${airport.city ? airport.city : "No Data"}</div>
-  
-            <div class="airport-city-code">City Code: ${airport.city_code ? airport.city_code : "No Data"}</div>
-  
-            <div class="airport-popularity">Popularity: ${popularityFormatted}</div>
-  
-            <div class="airport-latitude">Latitude: ${latitudeFormatted}</div>
-            
-            <div class="airport-longitude">Longitude: ${longitudeFormatted}</div>
-  
-            <div class="airport-timezone">Timezone: ${airport.timezone ? airport.timezone : "No Data"}</div>
-          </div>`;
-  
-          marker.bindPopup(popupHtml);
-        }
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log("Error:", textStatus, errorThrown);
-      },
+            var airports = data.response.slice(0, 10); 
+            for (var i = 0; i < airports.length; i++) {
+                var airport = airports[i];
+                var latLng = L.latLng(airport.lat, airport.lng);
+                var marker = L.marker(latLng, {
+                    icon: airportMarkerIcon
+                }).addTo(planeMarkersGroup);
+
+                var popularityFormatted = airport.popularity ?
+                    numeral(airport.popularity).format('0,0') :
+                    'No Data';
+
+                var latitudeFormatted = airport.lat ?
+                    numeral(airport.lat).format('0.0000') :
+                    'No Data';
+
+                var longitudeFormatted = airport.lng ?
+                    numeral(airport.lng).format('0.0000') :
+                    'No Data';
+
+                var popupHtml = `   <div class="airport-details">
+                    <i class="fas fa-plane airport-icon"></i>
+                    <br>
+                    <h1 class="airport-name">${airport.name ? airport.name : "No Data"}</h1>
+
+                    <div class="airport-city">City: ${airport.city ? airport.city : "No Data"}</div>
+
+                    <div class="airport-city-code">City Code: ${airport.city_code ? airport.city_code : "No Data"}</div>
+
+                    <div class="airport-popularity">Popularity: ${popularityFormatted}</div>
+
+                    <div class="airport-latitude">Latitude: ${latitudeFormatted}</div>
+
+                    <div class="airport-longitude">Longitude: ${longitudeFormatted}</div>
+
+                    <div class="airport-timezone">Timezone: ${airport.timezone ? airport.timezone : "No Data"}</div>
+                </div>`;
+
+                marker.bindPopup(popupHtml);
+            }
+          } catch(error) {
+            displayAlert(data.error)
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Error:", textStatus, errorThrown);
+        },
     });
-  }
+}
+
   
 
   getAirportData(twoDigitCountryCode);
@@ -1717,7 +1823,11 @@ $(document).ready(function () {
           $(".modal-header").css("background-color", "blue");
           function modalHeader() {
             const text = document.createElement("span");
+            if(!notFound){
             text.textContent = `${weatherDataName}, ${weatherDataCountry} Weather Information`;
+            } else {
+              text.textContent = 'Weather Information';
+            }
     
             const modalHeader = document.querySelector(".modal-title");
             modalHeader.innerHTML = "";
@@ -1728,6 +1838,7 @@ $(document).ready(function () {
 
          
           modal();
+          notFound = false;
 
           
         },

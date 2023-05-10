@@ -1,5 +1,4 @@
 <?php
-
 $lat = $_REQUEST['lat'];
 $lng = $_REQUEST['lng'];
 
@@ -16,5 +15,22 @@ $result = curl_exec($ch);
 
 curl_close($ch);
 
-echo $result;
+$output = [];
+
+$data = json_decode($result, true);
+if (isset($data['results']) && !empty($data['results'])) {
+    $output['status']['code'] = 200;
+    $output['status']['message'] = 'OK';
+    $output['data'] = $data['results'][0];
+} else {
+    $output['status']['code'] = 204;
+    $output['status']['message'] = 'Earthquake Marker Not Found';
+    $output['data'] = null;
+}
+
+header('Content-Type: application/json; charset=UTF-8');
+
+echo json_encode($output);
+
+
 ?>
