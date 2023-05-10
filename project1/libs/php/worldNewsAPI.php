@@ -38,6 +38,13 @@ if ($err) {
           $news['text'] = 'No Description Data';
       }
 
+      if (strpos($news['title'], 'Internal Server Error') !== false) {
+        $news['title'] = 'No Title Data';
+      }
+      if (strpos($news['text'], 'Internal Server Error') !== false) {
+          $news['text'] = 'No Description Data';
+      }
+
       if (strpos($news['title'], 'Apache2 Ubuntu') !== false) {
         $news['title'] = 'No Title Data';
       }
