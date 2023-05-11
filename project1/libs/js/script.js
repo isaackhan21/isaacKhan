@@ -1264,62 +1264,61 @@ function formatDate(dateString) {
 
   
 
-function getWeather(cityName) {
-  $.ajax({
-    type: "GET",
-    url: "libs/php/weatherAPI.php",
-    data: {
-      cityName: cityName,
-    },
-    dataType: "json",
-    success: function (data) {
-      weatherData = data.data;
-      weatherDataName = weatherData.name;
-      weatherDataCountry = weatherData.sys.country;
-
-      
-      var tbody = $("#weatherTable tbody");
-
-      
-      tbody.empty();
-
-      
-      createTableRow("fa-cloud", "Weather", weatherData.weather[0].description);
-      createTableRow("fa-thermometer-half", "Temperature", convertKelvinToCelsius(weatherData.main.temp) + "°C");
-      createTableRow("fa-info-circle", "Feels like", convertKelvinToCelsius(weatherData.main.feels_like) + "°C. ");
-      createTableRow("fa-wind", "Wind Speed", weatherData.wind.speed + "m/s ");
-      createTableRow("fa-compass", "Wind Degree", weatherData.wind.deg + "°");
-      createTableRow("fa-tachometer-alt", "Pressure", weatherData.main.pressure + "hPa");
-      createTableRow("fa-tint", "Humidity", weatherData.main.humidity + "%");
-      createTableRow("fa-eye", "Visibility", weatherData.visibility / 1000 + "km");
-
-      
-      function createTableRow(iconClass, label, ...values) {
-        var row = $("<tr></tr>");
-
-        var iconCell = $("<td><i class='fa " + iconClass + "'></i></td>");
-        var labelCell = $("<td></td>").text(label);
-        var valueCell = $("<td></td>").text(values.join(". "));
-
-        row.append(iconCell);
-        row.append(labelCell);
-        row.append(valueCell);
-
-        tbody.append(row);
-      }
-
-      function convertKelvinToCelsius(kelvin) {
-        return (kelvin - 273.15).toFixed(2);
-      }
-
-     
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log("Error:", textStatus, errorThrown);
-      console.log("There is an error");
-    },
-  });
-}
+  function getWeather(cityName) {
+    $.ajax({
+      type: "GET",
+      url: "libs/php/weatherAPI.php",
+      data: {
+        cityName: cityName,
+      },
+      dataType: "json",
+      success: function (data) {
+        weatherData = data.data;
+        weatherDataName = weatherData.name;
+        weatherDataCountry = weatherData.sys.country;
+  
+        var tbody = $("#weatherTable tbody");
+  
+        tbody.empty();
+  
+        createTableRow("fa-cloud", "Weather", weatherData.weather[0].description);
+        createTableRow("fa-thermometer-half", "Temperature", numeral(convertKelvinToCelsius(weatherData.main.temp)).format('0') + "°C");
+        createTableRow("fa-info-circle", "Feels like", numeral(convertKelvinToCelsius(weatherData.main.feels_like)).format('0') + "°C. ");
+        createTableRow("fa-wind", "Wind Speed", numeral(convertMsToKph(weatherData.wind.speed)).format('0') + "kph ");
+        createTableRow("fa-compass", "Wind Degree", weatherData.wind.deg + "°");
+        createTableRow("fa-tachometer-alt", "Pressure", weatherData.main.pressure + "hPa");
+        createTableRow("fa-tint", "Humidity", weatherData.main.humidity + "%");
+        createTableRow("fa-eye", "Visibility", weatherData.visibility / 1000 + "km");
+  
+        function createTableRow(iconClass, label, ...values) {
+          var row = $("<tr></tr>");
+  
+          var iconCell = $("<td><i class='fa " + iconClass + "'></i></td>");
+          var labelCell = $("<td></td>").text(label);
+          var valueCell = $("<td></td>").text(values.join(". "));
+  
+          row.append(iconCell);
+          row.append(labelCell);
+          row.append(valueCell);
+  
+          tbody.append(row);
+        }
+  
+        function convertKelvinToCelsius(kelvin) {
+          return (kelvin - 273.15);
+        }
+  
+        function convertMsToKph(ms) {
+          return Math.round(ms * 3.6);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log("Error:", textStatus, errorThrown);
+        console.log("There is an error");
+      },
+    });
+  }
+  
 
   
   

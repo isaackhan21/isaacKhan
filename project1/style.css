@@ -1113,11 +1113,11 @@ h3 i.fa-exclamation-triangle {
 }
 
 #holiday-table th:first-child {
-  text-align: center;
+  text-align: left;
 }
 
 #holiday-table td:first-child {
-  text-align: center;
+  text-align: left;
 }
 
 #holiday-table td:nth-child(2) {
@@ -1166,7 +1166,6 @@ h3 i.fa-exclamation-triangle {
   }
 
   #holiday-table th:nth-child(1) {
-    text-align: center;
     padding-left: 15px;
   }
 
