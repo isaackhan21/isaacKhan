@@ -294,7 +294,7 @@ function getData() {
       populateTable(data);
       getDepartments();
       getDepartmentsDropdown();
-      $("#preloader").hide();
+      
       
       
         
@@ -411,6 +411,7 @@ function getDepartmentsDropdown() {
     success: function(data) {
       populateDepartmentDropdown(data);
       editPopulateDepartmentDropdown(data);
+      $("#preloader").hide();
       
     },
     error: function(xhr, status, error) {
@@ -427,7 +428,7 @@ function getDepartments() {
     success: function(data) {
       populateDepartmentCheckboxes(data);
       populateDepartmentCheckboxesSidebar(data);
-      checkBoxesPopulated = true;
+      
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error);
@@ -530,6 +531,7 @@ function populateDepartmentCheckboxes(data) {
 
   departmentCheckboxes.empty();
   departmentCheckboxes.hide();
+  
 
   if (data.status.code === "200") {
     var departments = data.data;
