@@ -560,14 +560,26 @@ i.fa-search, i.fa-sync-alt {
   
  
 
-  .card-body {
-    width: 100%;
-  }
+ 
 
   
   .department-info {
     font-size: 1.1rem;
   }
+
+  
+}
+
+@media (max-width: 1024px) {
+  
+ 
+
+  .card-body {
+    width: 100%;
+  }
+
+  
+
 
   
 }

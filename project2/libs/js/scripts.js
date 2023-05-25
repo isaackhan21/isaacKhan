@@ -3,6 +3,7 @@ var currentOption = "firstName";
 var currentPersonId;
 column3shown = false;
 
+
 $(document).ready(function() {
   function updateButtonVisibility() {
     if ($(window).width() <= 767) {
@@ -116,6 +117,12 @@ $(document).ready(function() {
   $('#search-button-sidebar').click(function() {
   toggleSidebar();
 });
+
+$('#reset-filters-button-sidebar').click(function() {
+  toggleSidebar();
+});
+
+
 });
 
 
@@ -284,10 +291,14 @@ function getData() {
     url: "libs/php/getAll.php",
     dataType: "json",
     success: function(data) {
-      $("#preloader").hide();
       populateTable(data);
       getDepartments();
       getDepartmentsDropdown();
+      $("#preloader").hide();
+      
+      
+        
+      
       
     },
     error: function(xhr, status, error) {
@@ -400,6 +411,7 @@ function getDepartmentsDropdown() {
     success: function(data) {
       populateDepartmentDropdown(data);
       editPopulateDepartmentDropdown(data);
+      
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error);
@@ -415,6 +427,7 @@ function getDepartments() {
     success: function(data) {
       populateDepartmentCheckboxes(data);
       populateDepartmentCheckboxesSidebar(data);
+      checkBoxesPopulated = true;
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error);
@@ -516,6 +529,7 @@ function populateDepartmentCheckboxes(data) {
   var departmentCheckboxes = $("#department-checkboxes");
 
   departmentCheckboxes.empty();
+  departmentCheckboxes.hide();
 
   if (data.status.code === "200") {
     var departments = data.data;
@@ -531,8 +545,10 @@ function populateDepartmentCheckboxes(data) {
       wrapperDiv.append(checkbox); 
       wrapperDiv.append(label); 
 
-      departmentCheckboxes.append(wrapperDiv); 
+      departmentCheckboxes.append(wrapperDiv);
+      
     }
+    departmentCheckboxes.show();
   } else {
     showErrorAlert("Failed to get departments.");
   }
@@ -581,6 +597,8 @@ $("#reset-filters-button-sidebar").on("click", function() {
   getData();
   dataSorted = false;
   $(".table-data").scrollTop(0);
+  
+  
 });
 
 
@@ -786,6 +804,7 @@ $("#delete-modal-cancel").on("click", function() {
       },
       error: function(xhr, status, error) {
         showErrorAlert('Error connecting to the database');
+        
       }
     });
   

@@ -3,8 +3,7 @@
 
 
 
-ini_set('display_errors', 1); 
-error_reporting(E_ALL);
+
 
 include("config.php");
 
@@ -12,7 +11,7 @@ header('Content-Type: application/json; charset=UTF-8');
 
 $executionStartTime = microtime(true);
 
-$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
+$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname);
 
 if (mysqli_connect_errno()) {
     $output['status']['code'] = "300";
