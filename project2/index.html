@@ -4,9 +4,222 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Company Directory</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="Web/icons8-contacts-stickers-32.png">
+    <link rel="stylesheet" href="dist/css/bootstrap.css" />
+    <link href="font_awesome_icons/css/fontawesome.css" rel="stylesheet">
+    <link href="font_awesome_icons/css/all.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" />
 </head>
 <body>
-    
+  <div id="preloader">
+    <div id="loader"></div>
+  </div>
+  <div id="alert" class="alert custom-alert" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <span id="alert-message"></span>
+  </div> 
+  
+    <div class="container-fluid">
+      <div class="header">
+      
+  
+</div>
+      
+        <div class="container-div row justify-content-center">
+          
+          
+          <div class="col-sm-3 d-none d-xl-block  column-1">
+            
+            <form id="search-form">
+              <input id="search-input" type="text" name="search" placeholder="Search Personnel...">
+              <h5 class="departments-title">Departments</h5>
+              <div id="department-checkboxes"></div>
+              <button class="btn btn-secondary" id="search-button" type="submit"><i class="fas fa-search"></i> Search</button>
+          </form>
+          
+          <button class="btn btn-success" id="reset-filters-button"><i class="fas fa-sync-alt"></i> Reset Filters</button>
+          
+
+          
+            
+            
+          </select> 
+          </div>
+        
+        <div id="collapsed-sidebar" class="col-sm-8 col-md-6 col-lg-5 column-1-sidebar">
+          <button class="btn btn-secondary close-sidebar"><i class="fas fa-times"></i></button>
+          <form id="search-form-sidebar">
+            <input id="search-input-sidebar" type="text" name="search" placeholder="Search Personnel...">
+            <h5 class="departments-title">Departments</h5>
+            <div id="department-checkboxes-sidebar"></div>
+            <button class="btn btn-secondary" id="search-button-sidebar" type="submit"><i class="fas fa-search"></i> Search</button>
+          </form>
+          <button class="btn btn-success" id="reset-filters-button-sidebar"><i class="fas fa-sync-alt"></i> Reset Filters</button>
+        </div>
+
+      
+          
+          <div class="col-sm-12 col-md-5 col-lg-5 col-xl-3   column-2">
+            <div class="add-div2">
+              <button id="search-filters-mobile-button" class="btn btn-secondary device-button toggle-sidebar-mobile"><i class="fas fa-search"></i>Search Filters</button>
+      
+              <button id="add-employee-button-mobile" class="btn btn-primary device-button"><i class="fas fa-plus"></i>Add Personnel</button>
+              
+              
+            </div>
+            <div class="sort-dropdown-div">
+            <select class="form-control" id="sort-dropdown">
+              <option value="firstName">By First Name</option>
+              <option value="lastName">By Last Name</option>
+            </select>
+          </div>
+            <div class="table-data">
+            <table class="table">
+              
+              <tbody id="table-body">
+              </tbody>
+            </table>
+          </div>
+          
+          
+          </div>
+      
+          
+          <div class="col-sm-10 col-md-7 col-lg-7 col-xl-6   column-3">
+            <div class="card">
+              
+              <div class="card-body">
+                <div class="add-div">
+                  <button class="btn btn-success toggle-sidebar device-button d-none d-md-block d-xl-none"><i class="fas fa-sync-alt"></i> Search Filters</button>
+
+
+                  <button id="add-employee-button" class="btn btn-primary device-button"><i class="fas fa-plus"></i> Add Personnel</button>
+                </div>
+                <div class="card-primary">
+                  <h4 class="card-title" id="details-name"></h4>
+                  <p class="card-text card-email" id="details-email"></p>
+                </div>
+                <div class="department-location-wrapper">
+                  
+                  <p class="card-text" id="details-department"></p>
+                  <p class="card-text" id="details-location"></p>
+                </div>
+                <div class="edit-buttons">
+                  <button class="btn btn-primary" id="edit-button"><i class="fas fa-edit"></i> Edit Personnel</button>
+                  <button class="btn btn-danger" id="delete-button"><i class="fas fa-trash"></i> Delete Personnel</button>
+                  <button class="btn btn-secondary" id="back-button"><i class="fa-solid fa-arrow-left"></i> Go Back</button>           
+              </div>
+              </div>
+            </div>
+          </div>
+          
+       
+       <div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="delete-modal-label">Confirm Deletion</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="delete-modal-cancel" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="confirm-delete">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="add-person-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-person-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="add-person-modal-label">Add Personnel</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="add-person-form">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="department">Department</label>
+                  <select class="form-control" id="department-dropdown" name="department" required>
+                    
+                   
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Personnel</button>
+                <button type="button" class="btn btn-secondary" id="delete-modal-cancel" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="edit-person-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit-person-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit-person-modal-label">Edit Personnel</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="edit-person-form">
+                <div class="form-group">
+                  <label for="edit-firstName">First Name</label>
+                  <input type="text" class="form-control" id="edit-firstName" name="edit-firstName" required>
+                </div>
+                <div class="form-group">
+                  <label for="edit-lastName">Last Name</label>
+                  <input type="text" class="form-control" id="edit-lastName" name="edit-lastName" required>
+                </div>
+                <div class="form-group">
+                  <label for="edit-email">Email</label>
+                  <input type="email" class="form-control" id="edit-email" name="edit-email" required>
+                </div>
+                <div class="form-group">
+                  <label for="edit-department">Department</label>
+                  <select class="form-control" id="edit-department-dropdown" name="edit-department" required>
+                    
+                  </select>
+                </div>
+                <input type="hidden" id="edit-person-id" name="edit-person-id" value="">
+                <button type="submit" class="btn btn-primary">Update Personnel</button>
+                <button type="button" class="btn btn-secondary" id="edit-modal-cancel" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+  
+  
+          
+        </div>
+      </div>
+    <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+    <script src="dist/js/bootstrap.js"></script>
+    <script src="libs/js/scripts.js"></script>
 </body>
 </html>
