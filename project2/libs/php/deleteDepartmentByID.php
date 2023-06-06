@@ -1,5 +1,10 @@
 <?php
 
+	
+	
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
+
 	$executionStartTime = microtime(true);
 
 	include("config.php");
@@ -25,18 +30,14 @@
 	}	
 
 	
-	$locationQuery = 'SELECT id, name FROM location';
-	$locationResult = $conn->query($locationQuery);
-	$locations = [];
-	while ($locationRow = mysqli_fetch_assoc($locationResult)) {
-		array_push($locations, $locationRow);
-	}
 
-	$query = 'SELECT id, name, locationID FROM department';
-
-	$result = $conn->query($query);
+	$query = $conn->prepare('DELETE FROM department WHERE id = ?');
 	
-	if (!$result) {
+	$query->bind_param("i", $_REQUEST['id']);
+
+	$query->execute();
+	
+	if (false === $query) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -50,21 +51,12 @@
 		exit;
 
 	}
-   
-   	$data = [];
-
-	while ($row = mysqli_fetch_assoc($result)) {
-
-		array_push($data, $row);
-
-	}
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data']['departments'] = $data;
-	$output['data']['locations'] = $locations;
+	$output['data'] = [];
 	
 	mysqli_close($conn);
 

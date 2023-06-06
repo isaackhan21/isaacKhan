@@ -1,7 +1,83 @@
 var dataSorted = false;
 var currentOption = "firstName";
 var currentPersonId;
+var currentDepartmentId;
+var currentLocationId;
 column3shown = false;
+var locations;
+var location;
+var currentLocationID;
+var locationName;
+var allPersonnelData;
+var allDepartments;
+var allLocations;
+var personnelSorted = false;
+var personnelReloadSorted = false;
+var searchTermQuery = false;
+
+
+
+
+function toggleDropdown() {
+  var dropdownMenu = document.getElementById("dropdown-menu");
+  dropdownMenu.classList.toggle("show");
+}
+
+
+
+window.onclick = function(event) {
+  if (!event.target.matches('.btn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-menu");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function toggleDropdownMobile() {
+  var dropdownMenu = document.getElementById("dropdown-menu-mobile");
+  dropdownMenu.classList.toggle("show");
+}
+
+
+
+window.onclick = function(event) {
+  if (!event.target.matches('.btn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-menu");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function toggleDropdownCategories() {
+  var dropdownMenu = document.getElementById("categories-dropdown-menu");
+  dropdownMenu.classList.toggle("show");
+}
+
+
+
+window.onclick = function(event) {
+  
+  if (!event.target.matches('.btn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-menu");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+
 
 
 $(document).ready(function() {
@@ -11,7 +87,9 @@ $(document).ready(function() {
       $('#add-employee-button').hide();
       $('#add-employee-button-mobile').show();
       $('#search-filters-mobile-button').show();
-      $('#back-button').show();
+      $('#back-button').hide();
+      $('.dropdown').show();
+
       
     } else {
       
@@ -32,6 +110,7 @@ $(document).ready(function() {
        
         $('.column-2').show();
         $('.column-3').hide();
+        $('.dropdown').show();
       } else {
         
         $('.column-2').show();
@@ -56,23 +135,56 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
+
+
+  $(document).on('click', '.department-table-data tr', function() {
+    if ($(window).width() <= 767) {
+      $('.column-1, .column-2').hide();
+      $('.column-3').show();
+      $('#back-button').show();
+      $('.dropdown').hide();
+      
+    }
+  });
+
   $(document).on('click', '.table-data tr', function() {
     if ($(window).width() <= 767) {
       $('.column-1, .column-2').hide();
       $('.column-3').show();
+      $('#back-button').show();
+      $('.dropdown').hide();
+      
     }
   });
-});
+
+  $(document).on('click', '.location-table-data tr', function() {
+    if ($(window).width() <= 767) {
+      $('.column-1, .column-2').hide();
+      $('.column-3').show();
+      $('#back-button').show();
+      $('.dropdown').hide();
+      
+    }
+  });
+
 
 $(document).ready(function() {
   $('#back-button').on('click', function() {
     if ($(window).width() <= 767) {
       $('.column-2').show();
       $('.column-3').hide();
+      $('#back-button').hide();
+      $('.dropdown').show();
+      
     }
   });
 });
+$(document).ready(function() {
+    if ($(window).width() <= 767) {
+      $('#personnel-count').hide();
+      
+    }
+  });
 
 $(document).ready(function() {
   
@@ -125,11 +237,75 @@ $('#reset-filters-button-sidebar').click(function() {
 
 });
 
+$(document).ready(function() {
+  $('.table-data').show();
+  $('.department-table-data').hide();
+  $('.location-table-data').hide();
+  $('#personnel-card').show();
+  $('#department-card').hide();
+  $('#location-card').hide();
+  $(".sidebar-row:first").addClass("focused-row");
+  $(".sidebar-row:eq(1)").removeClass("focused-row");
+  $(".sidebar-row:eq(2)").removeClass("focused-row");
+  $('#personnel-count').show();
+  $('#department-count').hide();
+  $('#location-count').hide();
 
 
 
+$('#department-change-button, #department-change-button-header, #department-change-button-dropdown').click(function() {
+  $('.table-data').hide();
+  $('.department-table-data').show();
+  $('.location-table-data').hide();
+  $('#personnel-card').hide();
+  $('#department-card').show();
+  $('#location-card').hide();
+  $(".sidebar-row:first").removeClass("focused-row");
+  $(".sidebar-row:eq(1)").addClass("focused-row");
+  $(".sidebar-row:eq(2)").removeClass("focused-row");
+  $('#personnel-count').hide();
+  $('#department-count').show();
+  $('#location-count').hide();
+})
+
+$('#personnel-change-button, #personnel-change-button-header, #personnel-change-button-dropdown').click(function() {
+  $('.table-data').show();
+  $('.department-table-data').hide();
+  $('.location-table-data').hide();
+  $('#personnel-card').show();
+  $('#department-card').hide();
+  $('#location-card').hide();
+  $(".sidebar-row:first").addClass("focused-row");
+  $(".sidebar-row:eq(1)").removeClass("focused-row");
+  $(".sidebar-row:eq(2)").removeClass("focused-row");
+  $('#personnel-count').show();
+  $('#department-count').hide();
+  $('#location-count').hide();
+});
+
+$('#location-change-button, #location-change-button-header, #location-change-button-dropdown').click(function() {
+  $('.table-data').hide();
+  $('.department-table-data').hide();
+  $('.location-table-data').show();
+  $('#personnel-card').hide();
+  $('#department-card').hide();
+  $('#location-card').show();
+  $(".sidebar-row:first").removeClass("focused-row");
+  $(".sidebar-row:eq(1)").removeClass("focused-row");
+  $(".sidebar-row:eq(2)").addClass("focused-row");
+  $('#personnel-count').hide();
+  $('#department-count').hide();
+  $('#location-count').show();
+});
+
+})
 
 
+
+function changeDropdownText(text) {
+  var dropdownButton = document.getElementById("categories-dropdown-button");
+  dropdownButton.innerHTML = text;
+}
 
 
 
@@ -170,17 +346,76 @@ function populateDetails(data) {
   detailsEmail.text(data.email);
 
   
-  function updateStyling() {
+  
    
       detailsDepartment.html("Department<br><span class='department-info'>" + (data.department || 'Not Found') + "</span>");
       detailsLocation.html("Location<br><span class='department-info'>" + (data.location || 'Not Found') + "</span>");
    
+  
+
+  
+}
+
+function populateDepartmentDetails(data, allDepartmentsData) {
+
+
+  currentDepartmentId = data.id;
+  var detailsName = $("#department-details-name");
+  var detailsDepartmentPersonnel = $("#details-department-personnel");
+  var detailsLocationPersonnel = $("#details-location-personnel");
+  var departmentPersonnelTitle = $(".department-personnel-title");
+
+  detailsName.text(data.name);
+
+  function updateStyling() {
+    detailsDepartmentPersonnel.empty();
+    detailsLocationPersonnel.empty();
+
+    var departmentPersonnel = allPersonnelData.filter(function(person) {
+      return person.department === data.name;
+    });
+
+    if (departmentPersonnel.length > 0) {
+      departmentPersonnel.sort(function(a, b) {
+        var nameA = a.firstName.toLowerCase() + " " + a.lastName.toLowerCase();
+        var nameB = b.firstName.toLowerCase() + " " + b.lastName.toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+
+      departmentPersonnel.forEach(function(person) {
+        var fullName = "<p class='card-text'>" + person.firstName + " " + person.lastName + "</p>";
+        var email = "<p class='card-text' id='details-department-personnel-email'>" + person.email + "</p>";
+        var personnelInfo = "<div class='personnel-info'>" + fullName + email + "</div>";
+        detailsDepartmentPersonnel.append(personnelInfo);
+      });
+
+      departmentPersonnelTitle.text("Personnel (" + departmentPersonnel.length + ")");
+    } else {
+      var noPersonnelMessage = "<p class='card-text'>No personnel found for this department.</p>";
+      detailsDepartmentPersonnel.append(noPersonnelMessage);
+      departmentPersonnelTitle.text("Personnel (0)");
+    }
+
+    var departmentLocationID = allDepartmentsData.data.departments.filter(function(department) {
+      return department.name === data.name;
+    })[0].locationID;
+
+    var departmentLocationName = departmentLocationID !== null ? allDepartmentsData.data.locations.find(function(location) {
+      return location.id === departmentLocationID;
+    }).name : "Not Found";
+    
+
+    if (departmentLocationName) {
+      var locationName = "<p class='card-text'>" + departmentLocationName + "</p>";
+      detailsLocationPersonnel.append(locationName);
+    } else {
+      var noLocationsMessage = "<p class='card-text'>No location found for this department.</p>";
+      detailsLocationPersonnel.append(noLocationsMessage);
+    }
   }
 
-  
   updateStyling();
 
-  
   $(window).resize(function() {
     updateStyling();
   });
@@ -188,98 +423,265 @@ function populateDetails(data) {
 
 
 
-function populateTable(data) {
-  var tableBody = $("#table-body");
-  var sortDropdown = $("#sort-dropdown");
 
-  
-  tableBody.empty();
-  
-  var sortedData = data.data.slice(); 
 
+
+
+
+
+
+
+
+
+
+
+
+function populateLocationDetails(data, allLocationsData) {
   
-  if(!dataSorted){
-    if (currentOption === "firstName") {
-      sortedData.sort(function(a, b) {
-        var nameA = a.firstName + " " + a.lastName;
-        var nameB = b.firstName + " " + b.lastName;
-        return nameA.localeCompare(nameB);
-      });
-    } else if (currentOption === "lastName") {
-      sortedData.sort(function(a, b) {
-        var nameA = a.lastName + " " + a.firstName;
-        var nameB = b.lastName + " " + b.firstName;
-        return nameA.localeCompare(nameB);
-      });
+
+  currentLocationId = data.id;
+  var detailsName = $("#location-details-name");
+  var locationDepartmentsDiv = $("#location-departments-div");
+  var locationDepartmentsTitle = $("#location-departments-name");
+
+  detailsName.text(data.name);
+
+  function updateStyling() {
+    locationDepartmentsDiv.empty();
+
+    var departmentsInLocation = [];
+
+    var locationID;
+    for (var i = 0; i < allLocationsData.data.locations.length; i++) {
+      if (allLocationsData.data.locations[i].name === data.name) {
+        locationID = allLocationsData.data.locations[i].id;
+        break;
+      }
     }
-  dataSorted = true;
+
+    allLocationsData.data.departments.forEach(function(department) {
+      if (department.locationID === locationID) {
+        departmentsInLocation.push(department.name);
+      }
+    });
+
+    
+    if (departmentsInLocation.length > 0) {
+      departmentsInLocation.forEach(function(department) {
+        var departmentCount = allPersonnelData.filter(function(person) {
+          return person.department === department && person.location === data.name;
+        }).length;
+        var departmentInfo = "<div class='department-location-info'>" +
+          "<p class='card-text'>" + department + "</p>" +
+          "<p class='card-text'>" + departmentCount + " Personnel</p>" +
+          "</div>";
+        locationDepartmentsDiv.append(departmentInfo);
+      });
+      locationDepartmentsTitle.text("Departments (" + departmentsInLocation.length + ")");
+    } else {
+      var noDepartmentsMessage = "<p class='card-text'>No departments found in this location.</p>";
+      locationDepartmentsDiv.append(noDepartmentsMessage);
+      locationDepartmentsTitle.text("Departments (0)");
+    }
+  }
+
+  updateStyling();
+
+  $(window).resize(function() {
+    updateStyling();
+  });
 }
 
+
+
+
+
+
+
+var sortedData;
+
+
+
+function populateTable(data) {
+  var tableBody = $("#table-body");
   
+
+  tableBody.empty();
+  sortedData = data.data;
+
+  
+
+  sortedData.sort(function(a, b) {
+    var nameA = a.firstName + " " + a.lastName;
+    var nameB = b.firstName + " " + b.lastName;
+    return nameA.localeCompare(nameB);
+  });
+
   sortedData.forEach(function(entry, index) {
     var row = $("<tr>");
-    row.attr("data-id", entry.id); 
+    row.attr("data-id", entry.id);
 
     var td = $("<td>");
 
-    
     var name = $("<h5>").text(entry.firstName + " " + entry.lastName);
     var email = $("<p>").text(entry.email);
 
-    
     td.append(name, email);
     row.append(td);
 
-    
     row.on("click", function() {
-      
       populateDetails(entry);
-
-      
       tableBody.find("tr").removeClass("active-row");
       $(this).addClass("active-row");
     });
 
-    
     tableBody.append(row);
 
-    
     if (index === 0) {
       populateDetails(entry);
       row.addClass("active-row");
     }
+    personnelSorted = true;
   });
 
-  sortDropdown.val(currentOption);
+  var personnelCount = sortedData.length;
+  var personnelCountText = personnelCount + " Personnel";
+  $("#personnel-count").text(personnelCountText);
+}
 
+
+
+
+
+
+function populateDepartmentTable(data) {
   
-  sortDropdown.on("change", function() {
-    currentOption = $(this).val();
-    sortTableBy(currentOption);
+  var tableBody = $("#department-table-body");
+
+  tableBody.empty();
+
+  var sortedData = data.data.departments.slice();
+
+  sortedData.sort(function(a, b) {
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
+    return nameA.localeCompare(nameB);
   });
 
-  
-  function sortTableBy(option) {
-    var sortedData = data.data.slice(); 
+  sortedData.forEach(function(entry, index) {
+    var row = $("<tr>");
+    row.attr("data-id", entry.id);
 
-    if (option === "firstName") {
-      sortedData.sort(function(a, b) {
-        var nameA = a.firstName + " " + a.lastName;
-        var nameB = b.firstName + " " + b.lastName;
-        return nameA.localeCompare(nameB);
-      });
-    } else if (option === "lastName") {
-      sortedData.sort(function(a, b) {
-        var nameA = a.lastName + " " + a.firstName;
-        var nameB = b.lastName + " " + b.firstName;
-        return nameA.localeCompare(nameB);
-      });
-    }
+    var td = $("<td>");
+
+    var name = $("<h5>").text(entry.name);
 
     
-    populateTable({ data: sortedData });
+    var location = $("<p>").text(getDepartmentLocation(entry.locationID, data));
+    
+    td.append(name, location);
+    row.append(td);
+
+    row.on("click", function() {
+      populateDepartmentDetails(entry, data);
+
+      tableBody.find("tr").removeClass("department-active-row");
+      $(this).addClass("department-active-row");
+    });
+
+    tableBody.append(row);
+
+    if (index === 0) {
+      populateDepartmentDetails(entry, data);
+      row.addClass("department-active-row");
+    }
+  });
+
+  var departmentCount = sortedData.length;
+  var departmentCountText = departmentCount + " Department";
+  if (departmentCount !== 1) {
+    departmentCountText += "s";
   }
+  $("#department-count").text(departmentCountText);
 }
+
+function getDepartmentLocation(locationID, data) {
+  var departmentLocation = "Location not found";
+
+  data.data.locations.forEach(function(location) {
+    if (location.id === locationID) {
+      departmentLocation = location.name;
+    }
+  });
+
+  return departmentLocation;
+}
+
+
+
+function populateLocationTable(data) {
+  
+  var tableBody = $("#location-table-body");
+
+  tableBody.empty();
+
+  var sortedData = data.data.locations.slice();
+
+  sortedData.sort(function(a, b) {
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  sortedData.forEach(function(entry, index) {
+    var row = $("<tr>");
+    row.attr("data-id", entry.id);
+
+    var td = $("<td>");
+
+    var name = $("<h5>").text(entry.name);
+    var departmentCount = $("<p>").text(getDepartmentCount(entry.id, data) + " Departments");
+
+    td.append(name, departmentCount);
+    row.append(td);
+
+    row.on("click", function() {
+      populateLocationDetails(entry, data);
+
+      tableBody.find("tr").removeClass("location-active-row");
+      $(this).addClass("location-active-row");
+    });
+
+    tableBody.append(row);
+
+    if (index === 0) {
+      populateLocationDetails(entry, data);
+      row.addClass("location-active-row");
+    }
+  });
+
+  var locationCount = sortedData.length;
+  var locationCountText = locationCount + " Location";
+  if (locationCount !== 1) {
+    locationCountText += "s";
+  }
+  $("#location-count").text(locationCountText);
+}
+
+function getDepartmentCount(locationId, data) {
+  var count = 0;
+
+  data.data.departments.forEach(function(department) {
+    if (department.locationID === locationId) {
+      count++;
+    }
+  });
+
+  return count;
+}
+
+
+
 
 
 
@@ -287,13 +689,19 @@ function populateTable(data) {
 
 function getData() {
   $("#preloader").show();
+  $(".search-input").val("");
   $.ajax({
     url: "libs/php/getAll.php",
     dataType: "json",
     success: function(data) {
+      allPersonnelData = data.data;
       populateTable(data);
       getDepartments();
       getDepartmentsDropdown();
+      getLocations();
+      getLocationsDropdown();
+      personnelReloadSorted = false;
+      
       
       
       
@@ -314,7 +722,7 @@ function showAddPersonModal() {
 }
 
 
-$("#add-employee-button").on("click", function() {
+$("#add-employee-button, #add-employee-button-dropdown, #add-employee-button-dropdown-mobile").on("click", function() {
   
   
   showAddPersonModal();
@@ -325,6 +733,9 @@ $("#add-employee-button-mobile").on("click", function() {
   
   showAddPersonModal();
 });
+
+
+
 
 
 function addPersonnel(personnelData) {
@@ -352,6 +763,74 @@ function addPersonnel(personnelData) {
   });
 }
 
+function addDepartment(departmentData) {
+  $.ajax({
+    url: "libs/php/insertDepartment.php", 
+    type: "POST", 
+    data: departmentData,
+    dataType: "json",
+    success: function(data) {
+      
+      showSuccessAlert("Department details updated successfully!");
+      
+      $("#add-department-form")[0].reset();
+      
+      $("#add-department-modal").modal("hide");
+      dataSorted = false;
+      
+      getData(); 
+    },
+    error: function(xhr, status, error) {
+      
+      console.log("Error: " + error);
+      showErrorAlert("Failed to update department details. Please try again.");
+    }
+  });
+}
+
+function addLocation(name) {
+  $.ajax({
+    url: "libs/php/insertLocation.php", 
+    type: "POST", 
+    data: {name: name},
+    dataType: "json",
+    success: function(data) {
+      
+      showSuccessAlert("Location details updated successfully!");
+      
+      $("#add-location-form")[0].reset();
+      
+      $("#add-location-modal").modal("hide");
+      dataSorted = false;
+      
+      getData(); 
+    },
+    error: function(xhr, status, error) {
+      
+      console.log("Error: " + error);
+      showErrorAlert("Failed to update location details. Please try again.");
+    }
+  });
+}
+
+function getLocationsDropdown() {
+  $.ajax({
+    url: "libs/php/getAllLocations.php",
+    dataType: "json",
+    success: function(data) {
+     
+     populateLocationDropdown(data);
+     editPopulateLocationDropdown(data);
+     locations = data.data;
+
+     
+      
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error);
+    }
+  });
+}
 
 
 $("#add-person-form").on("submit", function(event) {
@@ -367,48 +846,151 @@ $("#add-person-form").on("submit", function(event) {
   addPersonnel(personnelData);
 });
 
+ 
+ $('#add-department-button, #add-department-button-dropdown, #add-department-button-dropdown-mobile').click(function() {
+  $('#add-department-modal').modal('show');
+});
+
+
+$('#add-department-form').submit(function(e) {
+  e.preventDefault();
+  
+
+  
+  
+  var departmentData = {
+    name: $('#department-name').val(),
+    locationID: $("#location-dropdown").val(),
+  }
+  
+
+  for (var i = 0; i < locations.locations.length; i++) {
+    if (locations.locations[i].name == departmentData.locationID) {
+      currentLocationID = parseInt(locations.locations[i].id);
+      break;
+    }
+  }
+  var newDepartmentData = {
+    name: $('#department-name').val(),
+    locationID: currentLocationID,
+  }
+ 
+ 
+ 
+  addDepartment(newDepartmentData);
+
+ 
+  $('#add-department-modal').modal('hide');
+});
+
+
+
+
+$('#add-location-button, #add-location-button-dropdown, #add-location-button-dropdown-mobile').click(function() {
+  $('#add-location-modal').modal('show');
+});
+
+
+$('#add-location-form').submit(function(e) {
+  e.preventDefault();
+  
+
+  
+  
+  
+ locationName = $('#location-name').val(),
+    
+  
+  
+
+ 
+ 
+  
+  addLocation(locationName);
+  
+
+ 
+  $('#add-location-modal').modal('hide');
+});
+ 
+
+
 function populateDepartmentDropdown(data) {
   var departmentDropdown = $("#department-dropdown");
-  
 
-  
   departmentDropdown.empty();
-  
 
-  
-  data.data.forEach(function(department) {
+  var sortedDepartments = data.data.departments.sort(function(a, b) {
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  sortedDepartments.forEach(function(department) {
     var option = $("<option>").text(department.name).val(department.name);
     departmentDropdown.append(option);
-    
-
-    
   });
 }
 
 function editPopulateDepartmentDropdown(data) {
-  
   var editDepartmentDropdown = $("#edit-department-dropdown");
 
-  
-  
   editDepartmentDropdown.empty();
 
-  
-  data.data.forEach(function(department) {
-    var option = $("<option>").text(department.name).val(department.name);
-    
-    editDepartmentDropdown.append(option);
+  var sortedDepartments = data.data.departments.sort(function(a, b) {
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
+    return nameA.localeCompare(nameB);
+  });
 
-  
-    
+  sortedDepartments.forEach(function(department) {
+    var option = $("<option>").text(department.name).val(department.name);
+    editDepartmentDropdown.append(option);
   });
 }
+
+
+function editPopulateLocationDropdown(data) {
+  var editDepartmentDropdown = $("#edit-department-location");
+
+  editDepartmentDropdown.empty();
+
+  var sortedLocations = data.data.locations.sort(function(a, b) {
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  sortedLocations.forEach(function(location) {
+    var option = $("<option>").text(location.name).val(location.name);
+    editDepartmentDropdown.append(option);
+  });
+}
+
+function populateLocationDropdown(data) {
+  var locationDropdown = $("#location-dropdown");
+
+  locationDropdown.empty();
+
+  var sortedLocations = data.data.locations.sort(function(a, b) {
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  sortedLocations.forEach(function(location) {
+    var option = $("<option>").text(location.name).val(location.name);
+    locationDropdown.append(option);
+  });
+}
+
 
 function getDepartmentsDropdown() {
   $.ajax({
     url: "libs/php/getAllDepartments.php",
     dataType: "json",
     success: function(data) {
+      
       populateDepartmentDropdown(data);
       editPopulateDepartmentDropdown(data);
       $("#preloader").hide();
@@ -421,13 +1003,17 @@ function getDepartmentsDropdown() {
 }
 
 
+
+
 function getDepartments() {
   $.ajax({
     url: "libs/php/getAllDepartments.php",
     dataType: "json",
     success: function(data) {
-      populateDepartmentCheckboxes(data);
-      populateDepartmentCheckboxesSidebar(data);
+      allDepartments = data;
+      
+      populateDepartmentTable(data);
+      
       
     },
     error: function(xhr, status, error) {
@@ -435,6 +1021,24 @@ function getDepartments() {
     }
   });
 }
+
+function getLocations() {
+  $.ajax({
+    url: "libs/php/getAllLocations.php",
+    dataType: "json",
+    success: function(data) {
+     
+     allLocations = data;
+     populateLocationTable(data);  
+     
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error);
+    }
+  });
+}
+
+
 var departmentID;
 var departments;
 
@@ -445,6 +1049,7 @@ function fetchPersonDetails(personId) {
     data: { id: personId },
     dataType: "json",
     success: function(data) {
+      
       $("#preloader").hide();
       var personnel = data.data.personnel[0]; 
       $("#edit-firstName").val(personnel.firstName);
@@ -472,11 +1077,70 @@ function fetchPersonDetails(personId) {
   });
 }
 
+function fetchDepartmentDetails(departmentId) {
+  $.ajax({
+    url: "libs/php/getDepartmentDetails.php",
+    type: "GET",
+    data: { id: departmentId },
+    dataType: "json",
+    success: function(data) {
+      
+      $("#preloader").hide();
+      var department = data.data[0];
+      $("#edit-department-name").val(department.name);
+      var locationName;
+      var locationID = department.locationID;
+      for (var i = 0; i < allLocations.data.locations.length; i++) {
+        
+        if (allLocations.data.locations[i].id == locationID) {
+          locationName = allLocations.data.locations[i].name;
+          
+        }
+      }
+      
+      $("#edit-department-location").val(locationName);
+
+      $("#edit-department-modal").modal("show");
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error);
+      showErrorAlert("Failed to fetch department details. Please try again.");
+    }
+  });
+}
+
+function fetchLocationDetails(locationId) {
+  $.ajax({
+    url: "libs/php/getLocationDetails.php",
+    type: "GET",
+    data: { id: locationId },
+    dataType: "json",
+    success: function(data) {
+     
+      $("#preloader").hide();
+      var location = data.data[0];
+      $("#edit-location-name").val(location.name);
+  
+
+      $("#edit-location-modal").modal("show");
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error);
+      showErrorAlert("Failed to fetch department details. Please try again.");
+    }
+  });
+}
 
 
 
 
-$("#edit-button").on("click", function() {
+
+
+
+
+
+
+$("#edit-button, #edit-button-mobile").on("click", function() {
   var personId = currentPersonId;
   fetchPersonDetails(personId);
 });
@@ -504,7 +1168,7 @@ function updatePersonDetails(personId, updatedData) {
 
 $("#edit-person-form").on("submit", function(event) {
   event.preventDefault();
-  var personId = currentPersonId;;
+  var personId = currentPersonId;
   var selectedDepartment = $("#edit-department-dropdown").val();
   for (var i = 0; i < departments.length; i++) {
     if (departments[i].name == selectedDepartment) {
@@ -522,6 +1186,89 @@ $("#edit-person-form").on("submit", function(event) {
   updatePersonDetails(personId, updatedData);
 });
 
+$("#department-edit-button").on("click", function() {
+  var departmentId = currentDepartmentId;
+  fetchDepartmentDetails(departmentId);
+});
+
+$("#location-edit-button").on("click", function() {
+  var locationId = currentLocationId;
+  fetchLocationDetails(locationId);
+});
+
+function updateDepartmentDetails(departmentId, updatedData) {
+  $("#preloader").show();
+  $.ajax({
+    url: "libs/php/updateDepartment.php",
+    type: "POST",
+    data: { id: departmentId, ...updatedData },
+    dataType: "json",
+    success: function(data) {
+      $("#preloader").hide();
+      showSuccessAlert("Department details updated successfully!");
+      $("#edit-department-modal").modal("hide");
+      dataSorted = false;
+      getData();
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error);
+      showErrorAlert("Failed to update department details. Please try again.");
+    }
+  });
+}
+
+function updateLocationDetails(locationId, updatedData) {
+  $("#preloader").show();
+  $.ajax({
+    url: "libs/php/updateLocation.php",
+    type: "POST",
+    data: { id: locationId, ...updatedData },
+    dataType: "json",
+    success: function(data) {
+      $("#preloader").hide();
+      showSuccessAlert("Location details updated successfully!");
+      $("#edit-location-modal").modal("hide");
+      dataSorted = false;
+      getData();
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error);
+      showErrorAlert("Failed to update location details. Please try again.");
+    }
+  });
+}
+
+$("#edit-department-form").on("submit", function(event) {
+  event.preventDefault();
+  var departmentId = currentDepartmentId;
+  var selectedLocation = $("#edit-department-location").val();
+  for (var i = 0; i < allLocations.data.locations.length; i++) {
+    if (allLocations.data.locations[i].name == selectedLocation) {
+      updatedLocation = parseInt(allLocations.data.locations[i].id);
+      break;
+    }
+  }
+  var updatedDepartmentData = {
+    name: $("#edit-department-name").val(),
+    locationID: updatedLocation,
+  };
+  
+  updateDepartmentDetails(departmentId, updatedDepartmentData);
+});
+
+$("#edit-location-form").on("submit", function(event) {
+  event.preventDefault();
+  var locationId = currentLocationId;
+ 
+  var updatedLocationData = {
+    name: $("#edit-location-name").val(),
+    
+  };
+  
+  updateLocationDetails(locationId, updatedLocationData);
+});
+
+
 
 
 
@@ -531,10 +1278,23 @@ function populateDepartmentCheckboxes(data) {
 
   departmentCheckboxes.empty();
   departmentCheckboxes.hide();
-  
 
   if (data.status.code === "200") {
     var departments = data.data;
+
+    
+    departments.sort(function(a, b) {
+      var nameA = a.name.toUpperCase();
+      var nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
     for (var i = 0; i < departments.length; i++) {
       var checkbox = $('<input type="checkbox">')
         .attr("id", "sidebar1-department-" + departments[i].id)
@@ -543,18 +1303,18 @@ function populateDepartmentCheckboxes(data) {
         .attr("for", "sidebar1-department-" + departments[i].id)
         .text(departments[i].name);
 
-      var wrapperDiv = $('<div class="checkbox-wrapper">'); 
-      wrapperDiv.append(checkbox); 
-      wrapperDiv.append(label); 
+      var wrapperDiv = $('<div class="checkbox-wrapper">');
+      wrapperDiv.append(checkbox);
+      wrapperDiv.append(label);
 
       departmentCheckboxes.append(wrapperDiv);
-      
     }
     departmentCheckboxes.show();
   } else {
     showErrorAlert("Failed to get departments.");
   }
 }
+
 
 function populateDepartmentCheckboxesSidebar(data) {
   var departmentCheckboxes = $("#department-checkboxes-sidebar");
@@ -563,6 +1323,18 @@ function populateDepartmentCheckboxesSidebar(data) {
 
   if (data.status.code === "200") {
     var departments = data.data;
+
+    departments.sort(function(a, b) {
+      var nameA = a.name.toUpperCase();
+      var nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
     for (var i = 0; i < departments.length; i++) {
       var checkbox = $('<input type="checkbox">')
         .attr("id", "sidebar2-department-" + departments[i].id)
@@ -603,6 +1375,13 @@ $("#reset-filters-button-sidebar").on("click", function() {
   
 });
 
+$("#reset-filters-button-mobile").on("click", function() {
+  $("#search-input-mobile").val("");
+  getData();
+  dataSorted = false;
+  $(".table-data").scrollTop(0);
+});
+
 
 function searchPersonnel(searchQuery) {
   var departmentIDs = []; 
@@ -619,7 +1398,7 @@ function searchPersonnel(searchQuery) {
   $.ajax({
     url: "libs/php/searchPersonnel.php", 
     type: "GET", 
-    data: { search: searchQuery, department: departmentIDString },
+    data: { search: searchQuery},
     dataType: "json",
     success: function(data) {
       
@@ -634,6 +1413,15 @@ function searchPersonnel(searchQuery) {
         if (personnelData.length > 0) {
           dataSorted = false;
           populateTable(data);
+          $(".table-data").show();
+          $(".department-table-data").hide();
+          $(".location-table-data").hide();
+          $('#personnel-card').show();
+          $('#department-card').hide();
+          $('#location-card').hide();
+          $('#personnel-count').show();
+          $('#department-count').hide();
+          $('#location-count').hide();
      
         } else {
           
@@ -675,14 +1463,20 @@ function searchPersonnelSidebar(searchQuery) {
       if (data.status.code === "200") {
         var personnelData = data.data;
         var tableBody = $("#table-body");
+        var departmentTableBody = $("#department-table-body");
+        var locationTableBody = $("#location-table-body");
 
         
         tableBody.empty();
+        departmentTableBody.empty();
+        locationTableBody.empty();
 
         if (personnelData.length > 0) {
-          
+          searchQuery = true;
           dataSorted = false;
           populateTable(data);
+          populateDepartmentTable(data);
+          populateLocationTable(data);
      
         } else {
           
@@ -711,7 +1505,21 @@ $("#search-form").on("submit", function(event) {
   event.preventDefault();
   var searchQuery = $(this).find("input[name='search']").val();
   
+  
   searchPersonnel(searchQuery);
+ 
+
+  
+  $(".table-data").scrollTop(0);
+});
+
+$("#search-form-mobile").on("submit", function(event) {
+  event.preventDefault();
+  var mobileSearchQuery = $(this).find("input[name='search-mobile']").val();
+  
+  
+  searchPersonnel(mobileSearchQuery);
+ 
 
   
   $(".table-data").scrollTop(0);
@@ -750,13 +1558,56 @@ function deletePerson(id) {
   });
 }
 
+function deleteDepartment(id) {
+  console.log(id);
+  $.ajax({
+    url: "libs/php/deleteDepartmentByID.php",
+    type: "GET",
+    dataType: "json",
+    data: {
+      id: id
+    },
+    success: function(data) {
+      showSuccessAlert("You have successfully deleted Department details");
+      dataSorted = false;
+      getData();
+     
+    },
+    error: function(xhr, status, error) {
+      showErrorAlert("Error deleting Department details")
+    }
+  });
+}
 
-$("#delete-button").on("click", function() {
+function deleteLocation(id) {
+  console.log(id);
+  $.ajax({
+    url: "libs/php/deleteLocationByID.php",
+    type: "GET",
+    dataType: "json",
+    data: {
+      id: id
+    },
+    success: function(data) {
+      showSuccessAlert("You have successfully deleted this location");
+      dataSorted = false;
+      getData();
+     
+    },
+    error: function(xhr, status, error) {
+      showErrorAlert("Error deleting Location")
+    }
+  });
+}
+
+
+
+$("#delete-button, #delete-button-mobile").on("click", function() {
   
   var personId = $(".active-row").data("id");
 
   
-  var personName = $(".active h5").text();
+  var personName = $(".active-row h5").text();
   $("#delete-modal .modal-body").text("Are you sure you want to delete " + personName + " details?");
   $("#delete-modal").modal("show");
 
@@ -781,6 +1632,70 @@ $("#delete-button").on("click", function() {
 
 $("#delete-modal-cancel").on("click", function() {
   $("#delete-modal").modal("hide");
+});
+
+$("#department-delete-button").on("click", function() {
+  
+  var personId = $(".active-row").data("id");
+
+  
+  var departmentName = $(".department-active-row h5").text();
+  $("#delete-department-modal .modal-body").text("Are you sure you want to delete " + departmentName + " details?");
+  $("#delete-department-modal").modal("show");
+
+  
+  $("#confirm-department-delete").on("click", function(event) {
+    event.preventDefault();
+    
+
+    
+    var departmentId = $(".department-active-row").data("id");
+
+    
+    deleteDepartment(departmentId);
+
+    
+    $("#delete-department-modal").modal("hide");
+
+    
+  });
+});
+
+
+$("#delete-department-modal-cancel").on("click", function() {
+  $("#delete-department-modal").modal("hide");
+});
+
+$("#location-delete-button").on("click", function() {
+  
+  
+
+  
+  var locationName = $(".location-active-row h5").text();
+  $("#delete-location-modal .modal-body").text("Are you sure you want to delete " + locationName + " details?");
+  $("#delete-location-modal").modal("show");
+
+  
+  $("#confirm-location-delete").on("click", function(event) {
+    event.preventDefault();
+    
+
+    
+    var locationId = $(".location-active-row").data("id");
+
+    
+    deleteLocation(locationId);
+
+    
+    $("#delete-location-modal").modal("hide");
+
+    
+  });
+});
+
+
+$("#delete-location-modal-cancel").on("click", function() {
+  $("#delete-location-modal").modal("hide");
 });
 
 

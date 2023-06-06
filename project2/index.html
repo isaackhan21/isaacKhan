@@ -21,33 +21,121 @@
     </button>
     <span id="alert-message"></span>
   </div> 
+  <nav class="navbar navbar-expand-lg navbar-light">
+  <div class="d-flex navbar-div">
+    <div class="d-flex align-items-center me-auto">
+      <form id="search-form" class="d-none d-md-flex search-buttons">
+        <input class="form-control me-2 search-input" name="search" type="search" placeholder="Search Personnel..." aria-label="Search">
+        <button id="search-button" class="btn btn-outline-light me-2 search-button" type="submit">Search</button>
+        <button id="reset-filters-button" class="btn btn-outline-light reset-button" type="reset"><i class="fas fa-undo-alt"></i></button>
+      </form>
+    </div>
+    <div class="d-none d-xl-flex add-buttons">
+      <button id="add-location-button" class="btn btn-primary"><i class="fas fa-plus"></i> Add Location</button>
+      <button id="add-department-button" class="btn btn-primary"><i class="fas fa-plus"></i> Add Department</button>
+      <button id="add-employee-button" class="btn btn-primary"><i class="fas fa-plus"></i> Add Personnel</button>
+    </div>
+    <div class="d-none d-md-flex d-xl-none dropdown">
+      <button class="btn btn-outline-light dropdown-toggle" onclick="toggleDropdown()">
+        Add
+      </button>
+      <div id="dropdown-menu" class="dropdown-menu dropdown-menu-right">
+        <button id="add-location-button-dropdown" class="dropdown-item">Add Location</button>
+        <button id="add-department-button-dropdown" class="dropdown-item">Add Department</button>
+        <button id="add-employee-button-dropdown" class="dropdown-item">Add Personnel</button>
+      </div>
+    </div>
+    <div class="dropdown-parent-container d-md-none">
+     
+      <div class="dropdown-container d-flex justify-content-between">
+        <button class="btn btn-outline-light" id="back-button"><i class="fa-solid fa-arrow-left"></i> Go Back</button>
+        <div class="dropdown">
+          <button id="categories-dropdown-button" class="btn btn-outline-light dropdown-toggle" onclick="toggleDropdownCategories()">
+            Personnel
+          </button>
+          <div id="categories-dropdown-menu" class="dropdown-menu dropdown-menu-left">
+            <button id="personnel-change-button-dropdown" class="dropdown-item" onclick="changeDropdownText('Personnel')">Personnel</button>
+            <button id="department-change-button-dropdown" class="dropdown-item" onclick="changeDropdownText('Departments')">Departments</button>
+            <button id="location-change-button-dropdown" class="dropdown-item" onclick="changeDropdownText('Locations')">Locations</button>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" onclick="toggleDropdownMobile()">
+            Add
+          </button>
+          <div id="dropdown-menu-mobile" class="dropdown-menu dropdown-menu-right">
+            <button id="add-location-button-dropdown-mobile" class="dropdown-item">Add Location</button>
+            <button id="add-department-button-dropdown-mobile" class="dropdown-item">Add Department</button>
+            <button id="add-employee-button-dropdown-mobile" class="dropdown-item">Add Personnel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
   
+  
+  
+  
+    
     <div class="container-fluid">
-      <div class="header">
       
-  
-</div>
+     
+        
+        <div class="header d-none d-md-block d-xl-none">
+          <button id="personnel-change-button-header" class="btn btn-outline-primary">
+            <i class="fas fa-users"></i> Personnel
+          </button>
+          <button id="department-change-button-header" class="btn btn-outline-primary">
+            <i class="fas fa-building"></i> Departments
+          </button>
+          <button id="location-change-button-header" class="btn btn-outline-primary">
+            <i class="fas fa-map-marker-alt"></i> Locations
+          </button>
+        </div>
+        
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+
+
       
         <div class="container-div row justify-content-center">
           
           
-          <div class="col-sm-3 d-none d-xl-block  column-1">
-            
-            <form id="search-form">
-              <input id="search-input" type="text" name="search" placeholder="Search Personnel...">
-              <h5 class="departments-title">Departments</h5>
-              <div id="department-checkboxes"></div>
-              <button class="btn btn-secondary" id="search-button" type="submit"><i class="fas fa-search"></i> Search</button>
-          </form>
+      
           
-          <button class="btn btn-success" id="reset-filters-button"><i class="fas fa-sync-alt"></i> Reset Filters</button>
-          
-
-          
-            
-            
-          </select> 
+          <div class="col-sm-3 d-none d-xl-block column-1">
+            <div class="sidebar">
+              <div class="sidebar-row" id="personnel-change-button" tabindex="0">
+                <i class="fas fa-users"></i> Personnel
+              </div>
+              <div class="sidebar-row" id="department-change-button" tabindex="0">
+                <i class="fas fa-building"></i> Departments
+              </div>
+              <div class="sidebar-row" id="location-change-button" tabindex="0">
+                <i class="fas fa-map-marker-alt"></i> Locations
+              </div>
+            </div>
           </div>
+          
+          
+          
+          
+            
+            
+          
+          
         
         <div id="collapsed-sidebar" class="col-sm-8 col-md-6 col-lg-5 column-1-sidebar">
           <button class="btn btn-secondary close-sidebar"><i class="fas fa-times"></i></button>
@@ -64,18 +152,18 @@
           
           <div class="col-sm-12 col-md-5 col-lg-5 col-xl-3   column-2">
             <div class="add-div2">
-              <button id="search-filters-mobile-button" class="btn btn-secondary device-button toggle-sidebar-mobile"><i class="fas fa-search"></i>Search Filters</button>
+              <form id="search-form-mobile" class="d-md-none search-buttons">
+                <input class="form-control me-2 search-input" name="search-mobile" type="search" placeholder="Search Personnel..." aria-label="Search">
+                <button id="search-button-mobile" class="btn btn-outline-primary me-2 search-button" type="submit">Search</button>
+                
+              </form>
       
-              <button id="add-employee-button-mobile" class="btn btn-primary device-button"><i class="fas fa-plus"></i>Add Personnel</button>
-              
               
             </div>
-            <div class="sort-dropdown-div">
-            <select class="form-control" id="sort-dropdown">
-              <option value="firstName">By First Name</option>
-              <option value="lastName">By Last Name</option>
-            </select>
-          </div>
+          
+          <h5 id="personnel-count"></h5>
+           <h5  id="department-count"></h5>
+          <h5  id="location-count"></h5> 
             <div class="table-data">
             <table class="table">
               
@@ -83,35 +171,102 @@
               </tbody>
             </table>
           </div>
+          <div class="department-table-data">
+            <table class="table">
+              
+              <tbody id="department-table-body">
+              </tbody>
+            </table>
+          </div>
+          <div class="location-table-data">
+            <table class="table">
+              
+              <tbody id="location-table-body">
+              </tbody>
+            </table>
+          </div>
+         
           
           
           </div>
       
           
           <div class="col-sm-10 col-md-7 col-lg-7 col-xl-6   column-3">
-            <div class="card">
+            <div id="personnel-card" class="card">
               
               <div class="card-body">
                 <div class="add-div">
-                  <button class="btn btn-secondary toggle-sidebar device-button d-none d-md-block d-xl-none"><i class="fas fa-search"></i> Search Filters</button>
 
-
-                  <button id="add-employee-button" class="btn btn-primary device-button"><i class="fas fa-plus"></i> Add Personnel</button>
                 </div>
                 <div class="card-primary">
+                 <div class="card-details">
                   <h4 class="card-title" id="details-name"></h4>
                   <p class="card-text card-email" id="details-email"></p>
+                </div>
+                  <div class="d-none d-md-flex edit-buttons">
+                    <button class="btn btn-primary" id="edit-button"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-danger" id="delete-button"><i class="fas fa-trash"></i> Delete</button>
+                    
+                </div>
                 </div>
                 <div class="department-location-wrapper">
                   
                   <p class="card-text" id="details-department"></p>
                   <p class="card-text" id="details-location"></p>
                 </div>
-                <div class="edit-buttons">
-                  <button class="btn btn-primary" id="edit-button"><i class="fas fa-edit"></i> Edit Personnel</button>
-                  <button class="btn btn-danger" id="delete-button"><i class="fas fa-trash"></i> Delete Personnel</button>
-                  <button class="btn btn-secondary" id="back-button"><i class="fa-solid fa-arrow-left"></i> Go Back</button>           
+                <div class="d-flex d-md-none edit-buttons-mobile">
+                  <button class="btn btn-primary" id="edit-button-mobile"><i class="fas fa-edit"></i> Edit</button>
+                  <button class="btn btn-danger" id="delete-button-mobile"><i class="fas fa-trash"></i> Delete</button>
+                  
+              </div> 
               </div>
+            </div>
+            <div id="department-card" class="card">
+              <div class="department-card-body">
+                <div class="add-div">
+         
+                </div>
+               
+                <div class="department-card-primary">
+                
+               
+                  <h4 class="card-title" id="department-details-name"></h4>
+                  <div class="edit-buttons">
+                    <button class="btn btn-primary" id="department-edit-button"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-danger" id="department-delete-button"><i class="fas fa-trash"></i> Delete</button>
+                    
+                  </div> 
+                  
+                  
+                </div>
+                <p class="location-personnel-title">Location</p>
+                <div class="location-personnel-wrapper" id="details-location-personnel"></div>
+                <h5 class="department-personnel-title">Personnel</h5>
+                <div class="department-personnel-wrapper" id="details-department-personnel"></div>
+                 
+              </div>
+            </div>
+            <div id="location-card" class="card">
+              <div class="location-card-body">
+                <div class="add-div">
+                
+                </div>
+                <div class="location-card-primary">
+                  
+                  <h4 class="card-title" id="location-details-name"></h4>
+                  <div class="edit-buttons"> 
+                    <button class="btn btn-primary" id="location-edit-button"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-danger" id="location-delete-button"><i class="fas fa-trash"></i> Delete</button> 
+                    
+                   </div> 
+                 
+                </div>
+                <h5 id="location-departments-name">Departments</h5>
+                <div class="location-departments-div" id="location-departments-div"></div>
+       
+                 <div class="edit-buttons"> 
+              
+                 </div> 
               </div>
             </div>
           </div>
@@ -210,6 +365,156 @@
           </div>
         </div>
       </div>
+      <div id="add-department-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-department-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="add-department-modal-label">Add Department</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="add-department-form">
+                <div class="form-group">
+                  <label for="department-name">Department Name</label>
+                  <input type="text" class="form-control" id="department-name" name="department-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="location-dropdown">Location</label>
+                  <select class="form-control" id="location-dropdown" name="location-dropdown" required>
+                  
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Department</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="edit-department-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit-department-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit-department-modal-label">Edit Department</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="edit-department-form">
+                <div class="form-group">
+                  <label for="edit-department-name">Name</label>
+                  <input type="text" class="form-control" id="edit-department-name" name="edit-department-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="">Location</label>
+                  <select class="form-control" id="edit-department-location" name="edit-department-location" required>
+                    
+                  </select>
+                </div>
+                <input type="hidden" id="edit-department-id" name="edit-department-id" value="">
+                <button type="submit" class="btn btn-primary">Update Department</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div id="add-location-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-location-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="add-location-modal-label">Add Location</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="add-location-form">
+                <div class="form-group">
+                  <label for="location-name">Location Name</label>
+                  <input type="text" class="form-control" id="location-name" name="location-name" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Location</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="edit-location-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit-location-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit-location-modal-label">Edit Location</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="edit-location-form">
+                <div class="form-group">
+                  <label for="edit-location-name">Name</label>
+                  <input type="text" class="form-control" id="edit-location-name" name="edit-location-name" required>
+                </div>
+                <input type="hidden" id="edit-location-id" name="edit-location-id" value="">
+                <button type="submit" class="btn btn-primary">Update Location</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      <div id="delete-department-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delete-department-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="delete-department-modal-label">Confirm Deletion</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="delete-department-modal-cancel" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="confirm-department-delete">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="delete-location-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delete-location-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="delete-location-modal-label">Confirm Deletion</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="delete-location-modal-cancel" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="confirm-location-delete">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
       
       
       
