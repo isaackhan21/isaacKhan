@@ -351,9 +351,7 @@ function populateDetails(data) {
 }
 
 function populateDepartmentDetails(data, allData) {
-
-
-  currentDepartmentId = data.id;
+  var currentDepartmentId = data.id;
   var detailsName = $("#department-details-name");
   var detailsDepartmentPersonnel = $("#details-department-personnel");
   var detailsLocationPersonnel = $("#details-location-personnel");
@@ -394,18 +392,20 @@ function populateDepartmentDetails(data, allData) {
       return department.name === data.name;
     })[0].locationID;
 
-    var departmentLocationName = departmentLocationID !== null ? allData.data.locations.find(function(location) {
-      return location.id === departmentLocationID;
-    }).name : "Not Found";
-    
+    var departmentLocationName = "Not Found";
 
-    if (departmentLocationName) {
-      var locationName = "<p class='card-text'>" + departmentLocationName + "</p>";
-      detailsLocationPersonnel.append(locationName);
-    } else {
-      var noLocationsMessage = "<p class='card-text'>No location found for this department.</p>";
-      detailsLocationPersonnel.append(noLocationsMessage);
+    if (departmentLocationID !== null) {
+      var matchingLocation = allData.data.locations.find(function(location) {
+        return location.id === departmentLocationID;
+      });
+
+      if (matchingLocation) {
+        departmentLocationName = matchingLocation.name;
+      }
     }
+
+    var locationName = "<p class='card-text'>" + departmentLocationName + "</p>";
+    detailsLocationPersonnel.append(locationName);
   }
 
   updateStyling();
@@ -414,6 +414,7 @@ function populateDepartmentDetails(data, allData) {
     updateStyling();
   });
 }
+
 
 
 
