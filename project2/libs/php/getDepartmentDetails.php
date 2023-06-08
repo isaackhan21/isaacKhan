@@ -38,11 +38,20 @@ while ($row = mysqli_fetch_assoc($result)) {
     array_push($department, $row);
 }
 
+$locationQuery = 'SELECT id, name FROM location';
+$locationResult = $conn->query($locationQuery);
+$locations = [];
+
+while ($locationRow = mysqli_fetch_assoc($locationResult)) {
+    array_push($locations, $locationRow);
+}
+
 $output['status']['code'] = "200";
 $output['status']['name'] = "ok";
 $output['status']['description'] = "Success";
 $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-$output['data'] = $department;
+$output['data']['department'] = $department;
+$output['data']['locations'] = $locations;
 
 mysqli_close($conn);
 
