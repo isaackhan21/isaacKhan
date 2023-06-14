@@ -351,7 +351,7 @@ function populateDetails(data) {
 }
 
 function populateDepartmentDetails(data, allData) {
-  var currentDepartmentId = data.id;
+  currentDepartmentId = data.id;
   var detailsName = $("#department-details-name");
   var detailsDepartmentPersonnel = $("#details-department-personnel");
   var detailsLocationPersonnel = $("#details-location-personnel");
@@ -1087,7 +1087,6 @@ function fetchDepartmentDetails(departmentId) {
     data: { id: departmentId },
     dataType: "json",
     success: function(data) {
-      
       $("#preloader").hide();
       var department = data.data.department[0];
       $("#edit-department-name").val(department.name);
