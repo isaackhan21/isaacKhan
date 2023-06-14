@@ -442,12 +442,12 @@ i.fa-search, i.fa-sync-alt {
     display: none;
   }
 
-  .active-row {
+  .active-row, .department-active-row, .location-active-row {
     background-color: transparent;
     color: black;
   }
 
-  .table-data tr:hover {
+  .table-data tr:hover, .department-table-data tr:hover, .location-table-data tr:hover  {
     background-color: transparent;
   }
 
