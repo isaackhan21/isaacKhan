@@ -23,8 +23,8 @@ body {
 
 .column-1 {
   width: 40%;
-  flex-basis: 30%;
   padding: 20px;
+  
   
 }
 
@@ -133,14 +133,14 @@ body {
 .column-1 {
   padding: 10px;
   margin-top: 33px;
-  width: 200px;
+  width: 25%;
+  padding-left: 7px;
   
   
 }
 
 
 .column-2 {
-  width: 40%;
   padding-top: 10px;
   padding-right: 0;
   padding-left: 0;
@@ -171,11 +171,11 @@ body {
   align-items: start;
   justify-content: center;
   flex-shrink: 0;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.846rem;
+  padding-bottom: 0.8rem;
   cursor: pointer;
   border-bottom: 1px solid lightgrey;
-  padding-left: 0;
+  padding-left: 0.2rem;
 }
 
 .column-2 td {
@@ -184,6 +184,7 @@ body {
   align-items: start;
   justify-content: center;
   border: none;
+  
 }
 
 .column-2 td h5,
@@ -203,7 +204,6 @@ body {
 }
 
 .column-3 {
-  width: 20%;
   padding: 10px;
   padding-top: 5px;
   height: 100%;
@@ -241,11 +241,14 @@ body {
 
 .active-row, .department-active-row, .location-active-row {
   background-color: #9AD7F6;
+  
+}
+
+.active-row h5, .department-active-row h5, .location-active-row h5 {
   color: white;
 }
 
 #add-employee-button, #add-department-button, #add-location-button {
-  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -297,7 +300,7 @@ body {
 .card-body {
   padding: 1rem;
   padding-top: 2em;
-  width: 80%;
+  width: 81%;
 }
 
 .card-title {
@@ -444,6 +447,10 @@ i.fa-search, i.fa-sync-alt {
 
   .active-row, .department-active-row, .location-active-row {
     background-color: transparent;
+    
+  }
+
+  .active-row h5, .department-active-row h5, .location-active-row h5 {
     color: black;
   }
 
@@ -452,9 +459,10 @@ i.fa-search, i.fa-sync-alt {
   }
 
   .column-3 {
-    width: 100%;
+    width: 84%;
     padding-bottom: 0;
     height: calc(100vh - 80px);
+    margin: 0 auto;
   } 
 
   .card {
@@ -572,14 +580,7 @@ i.fa-search, i.fa-sync-alt {
 
 
 
-#add-employee-button-mobile {
-  width: 40%;
-  margin-bottom: 1rem;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  
-  
-}
+
 
 #search-filters-mobile-button {
   width: 40%;
@@ -588,6 +589,10 @@ i.fa-search, i.fa-sync-alt {
   padding-bottom: 0.5em;
  
 
+}
+
+.dropdown {
+  margin-left: 1rem;
 }
 
 
@@ -702,7 +707,7 @@ body.inactive-background #collapsed-sidebar {
 
 
 
-#alert {
+#alert, #alert-container {
   position: fixed;
   top: 2%;
   left: 50%;
@@ -712,12 +717,31 @@ body.inactive-background #collapsed-sidebar {
 }
 
 @media (max-width: 768px) {
-  #alert {
+  #alert, #alert-container {
     width: 100%;
     
 }
 }
 
+#alert-container .alert {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+#alert-container .alert.show {
+  opacity: 1;
+}
+
+#alert-container .alert-message {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+#alert-container .btn-close {
+  align-self: center;
+}
 
 
 .department-personnel-wrapper, .location-departments-div, .location-personnel-div {
@@ -757,7 +781,7 @@ body.inactive-background #collapsed-sidebar {
 }
 
 .department-card-body, .location-card-body {
-  width: 80%;
+  width: 81%;
   margin-left: 1rem;
 }
 
@@ -904,11 +928,7 @@ body.inactive-background #collapsed-sidebar {
   border-top: 1px solid lightgrey;
 }
 
-.add-buttons {
-  width: 500px;
-  display: flex;
-  justify-content: space-evenly;
-}
+
 
 .search-button {
   margin-right: 1rem;
@@ -1055,3 +1075,76 @@ body.inactive-background #collapsed-sidebar {
 .column-3 {
   display: block;
 }
+
+.table-data td, .department-table-data td, .location-table-data td {
+  background-color: transparent;
+}
+
+@media (min-width: 1400px) {
+  .container {
+      max-width: 1140px;
+  }
+  .add-buttons {
+    width: 500px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+#add-employee-button-mobile, #add-employee-button-xl, #add-employee-button {
+  margin-right: 1rem;
+}
+
+#add-department-button-mobile, #add-department-button-xl, #add-department-button {
+  margin-right: 1rem;
+}
+
+#add-location-button-mobile, #add-location-button-xl, #add-location-button {
+  margin-right: 1rem;
+}
+
+#back-button {
+  margin-left: 1rem;
+}
+
+
+.alert.custom-alert {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.alert.custom-alert.hide {
+  opacity: 0;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .column-2 {
+    width: 40%;
+  }
+
+  .column-3 {
+    width: 60%;
+  }
+}
+
+.header-button {
+  cursor: pointer;
+  margin-right: 0.5rem;
+  
+}
+
+
+
+
+.footer {
+  position: fixed;
+  bottom: 0;
+}
+
+@media (max-width: 1200px) {
+
+  .container-fluid {
+    padding-left: 17px;
+  }
+}
+

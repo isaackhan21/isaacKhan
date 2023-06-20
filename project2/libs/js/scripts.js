@@ -51,9 +51,24 @@ window.onclick = function(event) {
 }
 
 function toggleDropdownCategories() {
-  var dropdownMenu = document.getElementById("categories-dropdown-menu");
-  dropdownMenu.classList.toggle("show");
+  var focusedRow = $(".sidebar-row.focused-row");
+  var dropdownMenu = $("#categories-dropdown-menu");
+
+  
+  var focusedIndex = $(".sidebar-row").index(focusedRow);
+
+  
+  var dropdownItems = dropdownMenu.find('.dropdown-item');
+  dropdownItems.removeClass('active');
+  dropdownItems.eq(focusedIndex).addClass('active');
+
+ 
+  dropdownMenu.toggleClass("show");
 }
+
+
+
+
 
 
 
@@ -74,28 +89,88 @@ window.onclick = function(event) {
 
 
 
+
+
+
+
+
+
+
+
+
 $(document).ready(function() {
   function updateButtonVisibility() {
+    var focusedRow = $(".sidebar-row.focused-row");
+
     if ($(window).width() <= 767) {
-      
-      $('#add-employee-button').hide();
-      $('#add-employee-button-mobile').show();
+      $('#add-employee-button-mobile, #add-department-button-mobile, #add-location-button-mobile').hide();
       $('#search-filters-mobile-button').show();
       $('#back-button').hide();
       $('.dropdown').show();
 
+      if (focusedRow.attr('id') === 'personnel-change-button') {
+        $('#add-employee-button-mobile').show();
+      } else if (focusedRow.attr('id') === 'department-change-button') {
+        $('#add-department-button-mobile').show();
+      } else if (focusedRow.attr('id') === 'location-change-button') {
+        $('#add-location-button-mobile').show();
+      }
+
+      var selectedDropdownValue;
+      if (focusedRow.attr('id') === 'personnel-change-button') {
+        selectedDropdownValue = 'Personnel';
+      } else if (focusedRow.attr('id') === 'department-change-button') {
+        selectedDropdownValue = 'Departments';
+      } else if (focusedRow.attr('id') === 'location-change-button') {
+        selectedDropdownValue = 'Locations';
+      }
+
       
+      $('.dropdown-toggle').text(selectedDropdownValue);
     } else {
-      
-      $('#add-employee-button-mobile').hide();
-      $('#add-employee-button').show();
+      $('#add-employee-button-mobile, #add-department-button-mobile, #add-location-button-mobile').hide();
       $('#search-filters-mobile-button').hide();
       $('#back-button').hide();
-      
-   
-      
+      $('.dropdown').show();
+
+      $('#add-employee-button, #add-department-button, #add-location-button').hide();
+
+      if (focusedRow.attr('id') === 'personnel-change-button') {
+        $('#add-employee-button').show();
+      } else if (focusedRow.attr('id') === 'department-change-button') {
+        $('#add-department-button').show();
+      } else if (focusedRow.attr('id') === 'location-change-button') {
+        $('#add-location-button').show();
+      }
     }
   }
+
+  $(".sidebar-row:first").addClass("focused-row");
+  $(".sidebar-row:eq(1)").removeClass("focused-row");
+  $(".sidebar-row:eq(2)").removeClass("focused-row");
+
+  
+  updateButtonVisibility();
+
+  
+  $(".sidebar-row").on("focus", function() {
+    $(".sidebar-row").removeClass("focused-row");
+    $(this).addClass("focused-row");
+    updateButtonVisibility();
+  });
+
+  
+  $(window).on("resize", function() {
+    updateButtonVisibility();
+  });
+
+
+  
+
+
+
+  
+  
   function updateLayoutVisibility() {
     if ($(window).width() <= 1024) {
       
@@ -137,6 +212,7 @@ $(document).ready(function() {
       $('.column-3').show();
       $('#back-button').show();
       $('.dropdown').hide();
+      $('#add-department-button-mobile').hide();
       
     }
   });
@@ -147,6 +223,8 @@ $(document).ready(function() {
       $('.column-3').show();
       $('#back-button').show();
       $('.dropdown').hide();
+      $('#add-employee-button-mobile').hide();
+
       
     }
   });
@@ -157,6 +235,7 @@ $(document).ready(function() {
       $('.column-3').show();
       $('#back-button').show();
       $('.dropdown').hide();
+      $('#add-location-button-mobile').hide();
       
     }
   });
@@ -169,16 +248,18 @@ $(document).ready(function() {
       $('.column-3').hide();
       $('#back-button').hide();
       $('.dropdown').show();
-      
+      if ($('.table-data').is(':visible')) {
+        $('#add-employee-button-mobile').show();
+      } else if ($('.department-table-data').is(':visible')) {
+        $('#add-department-button-mobile').show();
+      } else if ($('.location-table-data').is(':visible')) {
+        $('#add-location-button-mobile').show();
+
+      }
     }
   });
 });
-$(document).ready(function() {
-    if ($(window).width() <= 767) {
-      $('#personnel-count').hide();
-      
-    }
-  });
+
 
 $(document).ready(function() {
   
@@ -244,6 +325,10 @@ $(document).ready(function() {
   $('#personnel-count').show();
   $('#department-count').hide();
   $('#location-count').hide();
+  $('#add-employee-button, #add-employee-button-xl, #add-employee-button-mobile').show();
+  $('#add-department-button, #add-department-button-xl, #add-department-button-mobile').hide();
+  $('#add-location-button, #add-location-button-xl, #add-location-button-mobile').hide();
+  
 
 
 
@@ -260,6 +345,12 @@ $('#department-change-button, #department-change-button-header, #department-chan
   $('#personnel-count').hide();
   $('#department-count').show();
   $('#location-count').hide();
+  $('#add-employee-button').hide();
+  $('#add-department-button').show();
+  $('#add-location-button').hide();
+  $('#add-employee-button, #add-employee-button-xl, #add-employee-button-mobile').hide();
+  $('#add-department-button, #add-department-button-xl, #add-department-button-mobile').show();
+  $('#add-location-button, #add-location-button-xl, #add-location-button-mobile').hide();
 })
 
 $('#personnel-change-button, #personnel-change-button-header, #personnel-change-button-dropdown').click(function() {
@@ -275,6 +366,12 @@ $('#personnel-change-button, #personnel-change-button-header, #personnel-change-
   $('#personnel-count').show();
   $('#department-count').hide();
   $('#location-count').hide();
+  $('#add-employee-button').show();
+  $('#add-department-button').hide();
+  $('#add-location-button').hide();
+  $('#add-employee-button, #add-employee-button-xl, #add-employee-button-mobile').show();
+  $('#add-department-button, #add-department-button-xl, #add-department-button-mobile').hide();
+  $('#add-location-button, #add-location-button-xl, #add-location-button-mobile').hide();
 });
 
 $('#location-change-button, #location-change-button-header, #location-change-button-dropdown').click(function() {
@@ -290,6 +387,12 @@ $('#location-change-button, #location-change-button-header, #location-change-but
   $('#personnel-count').hide();
   $('#department-count').hide();
   $('#location-count').show();
+  $('#add-employee-button').hide();
+  $('#add-department-button').hide();
+  $('#add-location-button').show();
+  $('#add-employee-button, #add-employee-button-xl, #add-employee-button-mobile').hide();
+  $('#add-department-button, #add-department-button-xl, #add-department-button-mobile').hide();
+  $('#add-location-button, #add-location-button-xl, #add-location-button-mobile').show();
 });
 
 })
@@ -306,24 +409,53 @@ function changeDropdownText(text) {
 
 
 function showSuccessAlert(message) {
-  var alertElement = $("#alert");
-  alertElement.removeClass("alert-danger").addClass("alert-success");
-  alertElement.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>' + message).fadeIn();
+  var alertContainer = $("#alert-container");
+  var alertElement = $('<div class="alert custom-alert alert-success" role="alert">' +
+    '<span class="alert-message" id="alert-message">' + message + '</span>' +
+    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+    '</div>');
+
+  alertContainer.empty().append(alertElement);
 
   setTimeout(function() {
-    alertElement.fadeOut();
-  }, 6000); 
+    alertElement.addClass('show');
+
+    setTimeout(function() {
+      alertElement.removeClass('show');
+
+      setTimeout(function() {
+        alertElement.remove();
+      }, 300);
+    }, 6000);
+  });
 }
+
+
+
+
 
 function showErrorAlert(message) {
-  var alertElement = $("#alert");
-  alertElement.removeClass("alert-success").addClass("alert-danger");
-  alertElement.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>' + message).fadeIn();
+  var alertContainer = $("#alert-container");
+  var alertElement = $('<div class="alert custom-alert alert-danger" role="alert">' +
+    '<span class="alert-message" id="alert-message">' + message + '</span>' +
+    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+    '</div>');
+
+  alertContainer.empty().append(alertElement);
 
   setTimeout(function() {
-    alertElement.fadeOut();
-  }, 6000); 
+    alertElement.addClass('show');
+
+    setTimeout(function() {
+      alertElement.removeClass('show');
+
+      setTimeout(function() {
+        alertElement.remove();
+      }, 300);
+    }, 6000);
+  });
 }
+
 
 
 
@@ -711,22 +843,7 @@ function getData() {
 }
 
 
-function showAddPersonModal() {
-  $("#add-person-modal").modal("show");
-}
 
-
-$("#add-employee-button, #add-employee-button-dropdown, #add-employee-button-dropdown-mobile").on("click", function() {
-  
-  
-  showAddPersonModal();
-});
-
-$("#add-employee-button-mobile").on("click", function() {
-  
-  
-  showAddPersonModal();
-});
 
 
 
@@ -742,8 +859,6 @@ function addPersonnel(personnelData) {
       
       showSuccessAlert("Personnel details updated successfully!");
       
-      $("#add-person-form")[0].reset();
-      
       $("#add-person-modal").modal("hide");
       dataSorted = false;
       
@@ -757,7 +872,50 @@ function addPersonnel(personnelData) {
   });
 }
 
+$('#add-person-modal').on('hidden.bs.modal', function () {
+  
+  $('#add-person-form')[0].reset();
+  
+});
+
+$('#add-department-modal').on('hidden.bs.modal', function () {
+  
+  $('#add-department-form')[0].reset();
+  
+});
+
+$('#add-location-modal').on('hidden.bs.modal', function () {
+  
+  $('#add-location-form')[0].reset();
+  
+});
+
+$('#add-person-modal').on('shown.bs.modal', function () {
+  
+
+  
+  $('#firstName').focus();
+  
+});
+
+$('#add-department-modal').on('shown.bs.modal', function () {
+  
+
+  
+  $('#department-name').focus();
+  
+});
+
+$('#add-location-modal').on('shown.bs.modal', function () {
+  
+
+  
+  $('#location-name').focus();
+  
+});
+
 function addDepartment(departmentData) {
+  
   $.ajax({
     url: "libs/php/insertDepartment.php", 
     type: "POST", 
@@ -767,17 +925,18 @@ function addDepartment(departmentData) {
       
       showSuccessAlert("Department details updated successfully!");
       
-      $("#add-department-form")[0].reset();
       
       $("#add-department-modal").modal("hide");
       dataSorted = false;
       
       getData(); 
+      departmentFormSubmitted = false;
     },
     error: function(xhr, status, error) {
       
       console.log("Error: " + error);
       showErrorAlert("Failed to update department details. Please try again.");
+      departmentFormSubmitted = false;
     }
   });
 }
@@ -792,7 +951,6 @@ function addLocation(name) {
       
       showSuccessAlert("Location details updated successfully!");
       
-      $("#add-location-form")[0].reset();
       
       $("#add-location-modal").modal("hide");
       dataSorted = false;
@@ -841,48 +999,56 @@ $("#add-person-form").on("submit", function(event) {
 });
 
  
- $('#add-department-button, #add-department-button-dropdown, #add-department-button-dropdown-mobile').click(function() {
-  $('#add-department-modal').modal('show');
-});
 
-function addDepartmentForm(locations){
-$('#add-department-form').submit(function(e) {
-  e.preventDefault();
-  
 
-  
-  
-  var departmentData = {
-    name: $('#department-name').val(),
-    locationID: $("#location-dropdown").val(),
-  }
-  
+function addDepartmentForm(locations) {
+  var formSubmitted = false;
 
-  for (var i = 0; i < locations.locations.length; i++) {
-    if (locations.locations[i].name == departmentData.locationID) {
-      currentLocationID = parseInt(locations.locations[i].id);
-      break;
+  function submitForm(e) {
+    e.preventDefault();
+
+    if (formSubmitted) {
+      return;
     }
-  }
-  var newDepartmentData = {
-    name: $('#department-name').val(),
-    locationID: currentLocationID,
-  }
- 
- 
- 
-  addDepartment(newDepartmentData);
 
- 
-  $('#add-department-modal').modal('hide');
-});
+    formSubmitted = true;
 
+    var departmentData = {
+      name: $('#department-name').val(),
+      locationID: $("#location-dropdown").val(),
+    }
+
+   
+
+    
+
+    for (var i = 0; i < locations.locations.length; i++) {
+      if (locations.locations[i].name == departmentData.locationID) {
+        currentLocationID = parseInt(locations.locations[i].id);
+        break;
+        
+      }
+    }
+    
+
+    var newDepartmentData = {
+      name: $('#department-name').val(),
+      locationID: currentLocationID,
+    }
+    addDepartment(newDepartmentData);
+  }
+
+  
+  if (!$('#add-department-form').data('events') || !$('#add-department-form').data('events')['submit']) {
+    $('#add-department-form').submit(submitForm);
+  }
 }
 
 
-$('#add-location-button, #add-location-button-dropdown, #add-location-button-dropdown-mobile').click(function() {
-  $('#add-location-modal').modal('show');
-});
+
+
+
+
 
 
 $('#add-location-form').submit(function(e) {
@@ -904,7 +1070,7 @@ $('#add-location-form').submit(function(e) {
   
 
  
-  $('#add-location-modal').modal('hide');
+  
 });
  
 
@@ -1036,17 +1202,21 @@ function getLocations() {
 
 
 
-
-function fetchPersonDetails(personId) {
+$('#edit-person-modal').on('show.bs.modal', function(e) {
+  var personId = currentPersonId;
+  var editButton = $("#edit-button");
+  var editButtonMobile = $("#edit-button-mobile");
+  editButton.attr("data-id", personId);
+  editButtonMobile.attr("data-id", personId);
   $.ajax({
     url: "libs/php/getPersonsDetails.php",
     type: "GET",
-    data: { id: personId },
+    data: { id: $(e.relatedTarget).attr('data-id') },
     dataType: "json",
     success: function(data) {
-      
       $("#preloader").hide();
-      var personnel = data.data.personnel[0]; 
+      var personnel = data.data.personnel[0];
+      $('#employeeID').val(personnel.id);
       $("#edit-firstName").val(personnel.firstName);
       $("#edit-lastName").val(personnel.lastName);
       $("#edit-email").val(personnel.email);
@@ -1070,7 +1240,7 @@ function fetchPersonDetails(personId) {
 
       editPersonForm(departments);
       
-      $("#edit-person-modal").modal("show");
+      
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error);
@@ -1078,17 +1248,21 @@ function fetchPersonDetails(personId) {
     }
   });
 }
+)
 
-
-function fetchDepartmentDetails(departmentId) {
+$('#edit-department-modal').on('show.bs.modal', function(e) {
+  var departmentId = currentDepartmentId;
+  var editButton = $("#department-edit-button");
+  editButton.attr("data-id", departmentId);
   $.ajax({
     url: "libs/php/getDepartmentDetails.php",
     type: "GET",
-    data: { id: departmentId },
+    data: {id: $(e.relatedTarget).attr('data-id')},
     dataType: "json",
     success: function(data) {
       $("#preloader").hide();
       var department = data.data.department[0];
+      $("#departmentID").val(department.id);
       $("#edit-department-name").val(department.name);
       
       var locationName;
@@ -1111,30 +1285,33 @@ function fetchDepartmentDetails(departmentId) {
       
       $("#edit-department-location").val(locationName);
 
-      $("#edit-department-modal").modal("show");
+      
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error);
       showErrorAlert("Failed to fetch department details. Please try again.");
     }
   });
-}
+})
 
 
-function fetchLocationDetails(locationId) {
+$('#edit-location-modal').on('show.bs.modal', function(e) {
+  var locationId = currentLocationId;
+  var editButton = $("#location-edit-button");
+  editButton.attr("data-id", locationId);
   $.ajax({
     url: "libs/php/getLocationDetails.php",
     type: "GET",
-    data: { id: locationId },
+    data: {id: $(e.relatedTarget).attr('data-id')},
     dataType: "json",
     success: function(data) {
-     
       $("#preloader").hide();
       var location = data.data[0];
+      $("#locationID").val(location.id);
       $("#edit-location-name").val(location.name);
   
 
-      $("#edit-location-modal").modal("show");
+      
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error);
@@ -1142,20 +1319,57 @@ function fetchLocationDetails(locationId) {
     }
   });
 }
+)
+$('#edit-person-modal').on('shown.bs.modal', function () {
+  
 
-
-
-
-
-
-
-
-
-
-$("#edit-button, #edit-button-mobile").on("click", function() {
-  var personId = currentPersonId;
-  fetchPersonDetails(personId);
+  
+  $('#edit-firstName').focus();
+  
 });
+
+$('#edit-person-modal').on('hidden.bs.modal', function () {
+  
+  $('#edit-person-form')[0].reset();
+  
+});
+
+
+$('#edit-location-modal').on('shown.bs.modal', function () {
+  
+
+  
+  $('#edit-location-name').focus();
+  
+});
+
+$('#edit-location-modal').on('hidden.bs.modal', function () {
+  
+  $('#edit-person-form')[0].reset();
+  
+});
+
+$('#edit-department-modal').on('shown.bs.modal', function () {
+  
+
+  
+  $('#edit-department-name').focus();
+  
+});
+
+$('#edit-department-modal').on('hidden.bs.modal', function () {
+  
+  $('#edit-department-form')[0].reset();
+  
+});
+
+
+
+
+
+
+
+
 
 function updatePersonDetails(personId, updatedData) {
   $("#preloader").show();
@@ -1181,7 +1395,7 @@ function updatePersonDetails(personId, updatedData) {
 function editPersonForm(departments){
 $("#edit-person-form").on("submit", function(event) {
   event.preventDefault();
-  var personId = currentPersonId;
+  var personId = $("#employeeID").val();
   var selectedDepartment = $("#edit-department-dropdown").val();
   for (var i = 0; i < departments.length; i++) {
     if (departments[i].name == selectedDepartment) {
@@ -1200,15 +1414,7 @@ $("#edit-person-form").on("submit", function(event) {
 });
 }
 
-$("#department-edit-button").on("click", function() {
-  var departmentId = currentDepartmentId;
-  fetchDepartmentDetails(departmentId);
-});
 
-$("#location-edit-button").on("click", function() {
-  var locationId = currentLocationId;
-  fetchLocationDetails(locationId);
-});
 
 function updateDepartmentDetails(departmentId, updatedData) {
   $("#preloader").show();
@@ -1255,7 +1461,7 @@ function updateLocationDetails(locationId, updatedData) {
 function editDepartmentForm(allLocations){
 $("#edit-department-form").on("submit", function(event) {
   event.preventDefault();
-  var departmentId = currentDepartmentId;
+  var departmentId = $("#departmentID").val();
   
   var selectedLocation = $("#edit-department-location").val();
   for (var i = 0; i < allLocations.locations.length; i++) {
@@ -1274,7 +1480,7 @@ $("#edit-department-form").on("submit", function(event) {
 
 $("#edit-location-form").on("submit", function(event) {
   event.preventDefault();
-  var locationId = currentLocationId;
+  var locationId = $("#locationID").val();
  
   var updatedLocationData = {
     name: $("#edit-location-name").val(),
@@ -1406,13 +1612,20 @@ $("#search-form-sidebar").on("submit", function(event) {
 
 
 
-function deletePerson(id) {
+function deletePerson() {
+  var personId = $(".active-row").data("id");
+  var deleteButton = $("#delete-button");
+  deleteButton.attr("data-id", personId);
+  
+  var personID = $("#delete-button").attr("data-id");
+  
+
   $.ajax({
     url: "libs/php/deletePersonDetailsByID.php",
     type: "GET",
     dataType: "json",
     data: {
-      id: id
+      id: personID
     },
     success: function(data) {
       showSuccessAlert("You have successfully deleted Personnel's details");
@@ -1427,21 +1640,27 @@ function deletePerson(id) {
 }
 
 function checkEmployeeCount(departmentId, departmentName) {
+  var deleteButton = $("#department-delete-button");
+  deleteButton.attr("data-id", departmentId);
+  var departmentID = $("#department-delete-button").attr("data-id");
   $.ajax({
     url: "libs/php/countEmployeesByDepartment.php",
     type: "GET",
     dataType: "json",
     data: {
-      departmentId: departmentId
+      departmentId: departmentID
     },
+    
     success: function(data) {
       
       if (data.data.count > 0) {
-        console.log(data);
         showErrorAlert("Cannot delete department. It has personnel assigned.");
+        
       } else {
         $("#delete-department-modal .modal-body").text("Are you sure you want to delete " + departmentName + " details?");
         $("#delete-department-modal").modal("show");
+        
+        
       }
     },
     error: function(xhr, status, error) {
@@ -1450,13 +1669,17 @@ function checkEmployeeCount(departmentId, departmentName) {
   });
 }
 
-function deleteDepartment(id) {
+function deleteDepartment() {
+  var departmentId = $(".department-active-row").data("id");
+  var deleteButton = $("#department-delete-button");
+  deleteButton.attr("data-id", departmentId);
+  var departmentID = $("#department-delete-button").attr("data-id");
   $.ajax({
     url: "libs/php/deleteDepartmentByID.php",
     type: "GET",
     dataType: "json",
     data: {
-      id: id
+      id: departmentID
     },
     success: function(data) {
       showSuccessAlert("You have successfully deleted Department details");
@@ -1470,13 +1693,17 @@ function deleteDepartment(id) {
   });
 }
 
-function deleteLocation(id) {
+function deleteLocation() {
+  var locationId = $(".location-active-row").data("id");
+  var deleteButton = $("#location-delete-button");
+  deleteButton.attr("data-id", locationId);
+  var locationID = $("#location-delete-button").attr("data-id");
   $.ajax({
     url: "libs/php/deleteLocationByID.php",
     type: "GET",
     dataType: "json",
     data: {
-      id: id
+      id: locationID
     },
     success: function(data) {
       showSuccessAlert("You have successfully deleted this location");
@@ -1492,49 +1719,44 @@ function deleteLocation(id) {
 
 
 
-$("#delete-button, #delete-button-mobile").on("click", function() {
+$('#delete-modal').on('show.bs.modal', function () {
   
-  var personId = $(".active-row").data("id");
 
   
   var personName = $(".active-row h5").text();
   $("#delete-modal .modal-body").text("Are you sure you want to delete " + personName + " details?");
-  $("#delete-modal").modal("show");
-
+}
+)
   
   $("#confirm-delete").on("click", function(event) {
     event.preventDefault();
     
 
     
-    var personId = $(".active-row").data("id");
 
     
-    deletePerson(personId);
+    deletePerson();
 
     
     $("#delete-modal").modal("hide");
 
     
   });
-});
 
 
-$("#delete-modal-cancel").on("click", function() {
-  $("#delete-modal").modal("hide");
-});
 
-$("#department-delete-button").on("click", function() {
+  $("#department-delete-button").on("click", function() {
   
-  var personId = $(".active-row").data("id");
-
-  
-  var departmentName = $(".department-active-row h5").text();
-  var departmentId = $(".department-active-row").data("id");
   
 
-  checkEmployeeCount(departmentId, departmentName);
-});
+  
+    var departmentName = $(".department-active-row h5").text();
+    var departmentId = $(".department-active-row").data("id");
+    
+    checkEmployeeCount(departmentId, departmentName);
+  });
+
+
 
   
 
@@ -1542,13 +1764,12 @@ $("#department-delete-button").on("click", function() {
   $("#confirm-department-delete").on("click", function(event) {
     event.preventDefault();
     
-    var departmentId = $('.department-active-row').data('id');
 
     
     
 
     
-    deleteDepartment(departmentId);
+    deleteDepartment();
 
     
     $("#delete-department-modal").modal("hide");
@@ -1557,9 +1778,7 @@ $("#department-delete-button").on("click", function() {
   });
 
 
-$("#delete-department-modal-cancel").on("click", function() {
-  $("#delete-department-modal").modal("hide");
-});
+
 
 $("#location-delete-button").on("click", function() {
   
@@ -1575,9 +1794,9 @@ $("#location-delete-button").on("click", function() {
   $("#confirm-location-delete").on("click", function(event) {
     event.preventDefault();
     
-    var locationId = $(".location-active-row").data("id");
+   
     
-    deleteLocation(locationId);
+    deleteLocation();
 
     
     
@@ -1591,19 +1810,19 @@ $("#location-delete-button").on("click", function() {
 
 
 
-$("#delete-location-modal-cancel").on("click", function() {
-  $("#delete-location-modal").modal("hide");
-});
 
 
 
 function checkDepartmentCount(locationId, locationName) {
+  var deleteButton = $("#location-delete-button");
+  deleteButton.attr("data-id", locationId);
+  var locationID = $("#location-delete-button").attr("data-id");
   $.ajax({
     url: "libs/php/countDepartmentsByLocation.php",
     type: "GET",
     dataType: "json",
     data: {
-      locationId: locationId
+      locationId: locationID
     },
     success: function(data) {
       if (data.data.count > 0) {
