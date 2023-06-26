@@ -88,19 +88,12 @@ window.onclick = function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 $(document).ready(function() {
   function updateButtonVisibility() {
     var focusedRow = $(".sidebar-row.focused-row");
+    var tableDataVisible = $(".table-data").is(":visible");
+    var departmentTableDataVisible = $(".department-table-data").is(":visible");
+    var locationTableDataVisible = $(".location-table-data").is(":visible");
 
     if ($(window).width() <= 767) {
       $('#add-employee-button-mobile, #add-department-button-mobile, #add-location-button-mobile').hide();
@@ -142,6 +135,18 @@ $(document).ready(function() {
       } else if (focusedRow.attr('id') === 'location-change-button') {
         $('#add-location-button').show();
       }
+
+      
+      if (tableDataVisible) {
+        $('#personnel-change-button-header').addClass('active');
+        $('#department-change-button-header, #location-change-button-header').removeClass('active');
+      } else if (departmentTableDataVisible) {
+        $('#personnel-change-button-header, #location-change-button-header').removeClass('active');
+        $('#department-change-button-header').addClass('active');
+      } else if (locationTableDataVisible) {
+        $('#personnel-change-button-header, #department-change-button-header').removeClass('active');
+        $('#location-change-button-header').addClass('active');
+      }
     }
   }
 
@@ -160,9 +165,35 @@ $(document).ready(function() {
   });
 
   
+   $("#personnel-change-button-header").on("click", function() {
+    $(".header-button").removeClass("active");
+    $(this).addClass("active");
+  });
+
+  $("#department-change-button-header").on("click", function() {
+    $(".header-button").removeClass("active");
+    $(this).addClass("active");
+  });
+
+  $("#location-change-button-header").on("click", function() {
+    $(".header-button").removeClass("active");
+    $(this).addClass("active");
+  });
+
+  
   $(window).on("resize", function() {
     updateButtonVisibility();
   });
+
+
+
+
+
+
+
+
+
+
 
 
   
@@ -1555,6 +1586,7 @@ function searchPersonnel(searchQuery) {
         } else {
           
           tableBody.html("<tr><td colspan='2'>No results found.</td></tr>");
+          $('#personnel-count').text("0 Personnel");
         }
       } else {
         

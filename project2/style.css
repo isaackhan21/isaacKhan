@@ -1148,3 +1148,37 @@ body.inactive-background #collapsed-sidebar {
   }
 }
 
+.header-button {
+  background-color: transparent;
+  color: #0d6efd;
+}
+
+#personnel-change-button-header.active {
+  background-color: blue;
+  color: white;
+}
+
+#department-change-button-header.active {
+  background-color: blue;
+  color: white;
+}
+
+#location-change-button-header.active {
+  background-color: blue;
+  color: white;
+}
+
+#personnel-change-button-header:not(.active) {
+  background-color: transparent;
+  color: #0d6efd;
+}
+
+#department-change-button-header:not(.active) {
+  background-color: transparent;
+  color: #0d6efd;
+}
+
+#location-change-button-header:not(.active) {
+  background-color: transparent;
+  color: #0d6efd;
+}
