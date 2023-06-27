@@ -85,6 +85,10 @@ window.onclick = function(event) {
   }
 }
 
+function changeDropdownText(text) {
+  var dropdownButton = $("#categories-dropdown-button");
+  dropdownButton.text(text);
+}
 
 
 
@@ -858,6 +862,10 @@ function getData() {
       getLocations();
       getLocationsDropdown();
       personnelReloadSorted = false;
+      $('#personnel-card #edit-button').show();
+      $('#personnel-card #delete-button').show();
+      $('#personnel-card #edit-button-mobile').show();
+      $('#personnel-card #delete-button-mobile').show();
       
       
       
@@ -1553,52 +1561,70 @@ $("#reset-filters-button-mobile").on("click", function() {
 });
 
 
+function handleSearchResults() {
+  $(".table-data").show();
+  $(".department-table-data").hide();
+  $(".location-table-data").hide();
+  $('#personnel-count').show();
+  $('#department-count').hide();
+  $('#location-count').hide();
+  $('#personnel-card').show();
+  $('#department-card').hide();
+  $('#location-card').hide();
+  $(".sidebar-row:first").addClass("focused-row");
+  $(".sidebar-row:eq(1)").removeClass("focused-row");
+  $(".sidebar-row:eq(2)").removeClass("focused-row");
+  $("#personnel-change-button-header").addClass("active");
+  $("#department-change-button-header").removeClass("active");
+  $("#location-change-button-header").removeClass("active");
+  $('#add-employee-button, #add-employee-button-xl, #add-employee-button-mobile').show();
+  $('#add-department-button, #add-department-button-xl, #add-department-button-mobile').hide();
+  $('#add-location-button, #add-location-button-xl, #add-location-button-mobile').hide();
+  changeDropdownText("Personnel");
+}
+
 function searchPersonnel(searchQuery) {
- 
   $.ajax({
-    url: "libs/php/searchPersonnel.php", 
-    type: "GET", 
-    data: { search: searchQuery},
+    url: "libs/php/searchPersonnel.php",
+    type: "GET",
+    data: { search: searchQuery },
     dataType: "json",
-    success: function(data) {
-      
-      
+    success: function (data) {
       if (data.status.code === "200") {
         var personnelData = data.data;
         var tableBody = $("#table-body");
 
-       
         tableBody.empty();
 
         if (personnelData.length > 0) {
           dataSorted = false;
           populateTable(data);
-          $(".table-data").show();
-          $(".department-table-data").hide();
-          $(".location-table-data").hide();
-          $('#personnel-card').show();
-          $('#department-card').hide();
-          $('#location-card').hide();
-          $('#personnel-count').show();
-          $('#department-count').hide();
-          $('#location-count').hide();
-     
+          handleSearchResults();
+          $('#personnel-card #edit-button').show();
+          $('#personnel-card #delete-button').show();
+          $('#personnel-card #edit-button-mobile').show();
+          $('#personnel-card #delete-button-mobile').show();
         } else {
-          
-          tableBody.html("<tr><td colspan='2'>No results found.</td></tr>");
+          tableBody.html("<tr class='no-results'><td colspan='2'>No results found.</td></tr>");
           $('#personnel-count').text("0 Personnel");
+          $('#personnel-card h4').text("No Results");
+          $('#personnel-card p').text("");
+          $('#personnel-card #edit-button').hide();
+          $('#personnel-card #delete-button').hide();
+          $('#personnel-card #edit-button-mobile').hide();
+          $('#personnel-card #delete-button-mobile').hide();
+          handleSearchResults();
         }
       } else {
-        
         showErrorAlert("Failed to search personnel. Please try again.");
       }
     },
-    error: function(xhr, status, error) {
-     
+    error: function (xhr, status, error) {
       showErrorAlert("Failed to search personnel. Please try again.");
     },
   });
 }
+
 
 
 

@@ -1154,17 +1154,17 @@ body.inactive-background #collapsed-sidebar {
 }
 
 #personnel-change-button-header.active {
-  background-color: blue;
+  background-color: #0d6efd;
   color: white;
 }
 
 #department-change-button-header.active {
-  background-color: blue;
+  background-color: #0d6efd;
   color: white;
 }
 
 #location-change-button-header.active {
-  background-color: blue;
+  background-color: #0d6efd;
   color: white;
 }
 
@@ -1181,4 +1181,9 @@ body.inactive-background #collapsed-sidebar {
 #location-change-button-header:not(.active) {
   background-color: transparent;
   color: #0d6efd;
+}
+
+
+.no-results {
+  pointer-events: none;
 }
