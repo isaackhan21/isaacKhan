@@ -138,7 +138,7 @@ h6 {
 
 @media (min-width: 991px) {
   #main {
-    margin-left: 100px;
+    /* margin-left: 100px; */
   }
 }
 
@@ -596,6 +596,14 @@ section {
 
 }
 
+.teck-stack-title {
+  margin: 3rem;
+}
+
+.skills-summary {
+  margin-left: 3rem;
+}
+
 /* Media query for screens smaller than 768px */
 @media (max-width: 1600px) {
   .skills-list {
@@ -610,6 +618,10 @@ section {
 .col-lg-6 {
     flex: 0 0 auto;
     width: 100%;
+}
+
+#resume .container .row .col-lg-6 {
+  width: 50%;
 }
 
 }
@@ -635,7 +647,7 @@ section {
 
 .resume .resume-item h4 {
   line-height: 18px;
-  font-size: 18px;
+  font-size: 5px;
   font-weight: 600;
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
@@ -679,13 +691,12 @@ section {
 .resume .resume-item {
   padding: 20px;
   margin-bottom: 20px;
-  background-color: #f7f8f9;
   border-radius: 5px;
 }
 
 .resume .resume-item h4 {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 19px;
+  /* font-weight: 700; */
   margin-bottom: 15px;
   color: #0563bb;
 }
@@ -708,6 +719,11 @@ section {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-bottom: 100px;
+}
+
+#resume .container .section-title {
+  padding-bottom: 50px;
 }
 /*--------------------------------------------------------------
 # Portfolio
@@ -895,6 +911,13 @@ section {
 
 .portfolio-details .portfolio-details-slider img {
   width: 100%;
+  
+}
+
+@media (min-width: 1360px) {
+  .portfolio-details .portfolio-details-slider img {
+    /* margin-top: 100px; */
+  }
 }
 
 .portfolio-details .portfolio-details-slider .swiper-pagination {
@@ -950,6 +973,7 @@ section {
 .portfolio-details .portfolio-description p {
   padding: 0;
 }
+
 
 /*--------------------------------------------------------------
 # Services
