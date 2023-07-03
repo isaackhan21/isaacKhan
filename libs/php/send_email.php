@@ -37,7 +37,8 @@ $mail->addAddress('isaackhan21@gmail.com', 'Isaac');
 $mail->Subject = $subject;
 $mail->Body = $message;
 
-$mail->addReplyTo($email, $name); 
+$mail->addReplyTo($email, $name);
+
 
 if ($mail->send()) {
   echo 'Email sent successfully.';
