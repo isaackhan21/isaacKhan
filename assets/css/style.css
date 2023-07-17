@@ -274,8 +274,8 @@ h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: url("../img/Isaac10.png") right/contain  no-repeat;
-  background-position: 90% 10%;
+  background: url("../img/newIsaacImage2.png") right/contain  no-repeat;
+  background-position: 99% 1%;
   /* background-size: cover; */
   position: relative;
   
@@ -298,7 +298,7 @@ h6 {
 
 #hero:before {
   content: "";
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.5);
   position: absolute;
   bottom: 0;
   top: 0;
@@ -308,7 +308,7 @@ h6 {
 
 @media (max-width: 768px) {
   #hero:before {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.6);
   }
 }
 
@@ -470,6 +470,8 @@ section {
     display: none;
  }
 }
+
+
 
 
 
