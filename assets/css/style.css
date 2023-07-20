@@ -307,9 +307,22 @@ h6 {
 }
 
 @media (max-width: 768px) {
+  /* #hero:before {
+    background: rgba(255, 255, 255, 0.8);
+  } */
+  #hero {
+    height: 80vh;
+    margin-top: 2rem;
+  }
+ 
+}
+
+
+@media (max-width: 992px) {
   #hero:before {
     background: rgba(255, 255, 255, 0.8);
   }
+  
  
 }
 
@@ -475,6 +488,13 @@ section {
 #about {
   margin-top: 60px;
 }
+
+@media (max-width: 400px) {
+  #about {
+    margin-top: 1.5rem;
+    padding-top: 0;
+  }
+ }
 
 
 
