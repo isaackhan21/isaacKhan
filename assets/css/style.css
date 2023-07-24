@@ -307,9 +307,7 @@ h6 {
 }
 
 @media (max-width: 768px) {
-  /* #hero:before {
-    background: rgba(255, 255, 255, 0.8);
-  } */
+
   #hero {
     height: 80vh;
     margin-top: 2rem;
